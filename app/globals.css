@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0C0A09;
+  --color-bg-elevated: #141211;
+  --color-bg-card: #1A1816;
+  --color-surface: #221F1D;
+
+  --color-accent: #800000;
+  --color-accent-light: #A02020;
+  --color-accent-glow: #B03030;
+
+  --color-cream: #F5F0EB;
+  --color-cream-muted: #C8BFB5;
+  --color-muted: #7A7067;
+
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+
+  --font-heading: var(--font-cormorant);
+  --font-body: var(--font-inter);
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  @apply bg-bg text-cream antialiased;
+  font-family: var(--font-body);
+}
+
+::selection {
+  background: rgba(128, 0, 0, 0.4);
+  color: #F5F0EB;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 300;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes line-grow {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}

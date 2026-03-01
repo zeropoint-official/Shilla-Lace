@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shilla Lace — Potential Collection Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:           #0C0A09;
+      --bg-elevated:  #141211;
+      --bg-card:      #1A1816;
+      --surface:      #221F1D;
+      --accent:       #800000;
+      --accent-light: #A02020;
+      --accent-glow:  #B03030;
+      --cream:        #F5F0EB;
+      --cream-muted:  #C8BFB5;
+      --muted:        #7A7067;
+      --border:       rgba(245,240,235,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    ::selection { background: rgba(128,0,0,0.4); color: var(--cream); }
+
+    /* ── Header ── */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(12,10,9,0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.35rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--cream);
+      text-decoration: none;
+    }
+
+    .header-badge {
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.35rem 0.85rem;
+    }
+
+    /* ── Hero Banner ── */
+    .hero {
+      padding: clamp(4rem, 10vw, 7rem) clamp(1.5rem, 5vw, 4rem) clamp(3rem, 7vw, 5rem);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 60% 50% at 50% 0%, rgba(128,0,0,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.65rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--accent-glow);
+      margin-bottom: 1.25rem;
+      display: block;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      line-height: 1.05;
+      color: var(--cream);
+      margin-bottom: 1.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--cream-muted);
+    }
+
+    .hero p {
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: var(--muted);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+      letter-spacing: 0.03em;
+    }
+
+    .hero-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      font-size: 0.65rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .hero-meta span { display: flex; align-items: center; gap: 0.5rem; }
+    .hero-meta span::before { content: '—'; color: var(--accent); }
+
+    /* ── Divider ── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0 clamp(1.5rem, 5vw, 4rem);
+      margin-bottom: 3rem;
+    }
+    .divider-line { flex: 1; height: 1px; background: var(--border); }
+    .divider-text {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* ── Grid ── */
+    .grid-section {
+      padding: 0 clamp(1.5rem, 5vw, 4rem) clamp(4rem, 8vw, 6rem);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2px;
+    }
+
+    /* ── Product Card ── */
+    .product-card {
+      background: var(--bg-card);
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      transition: background 0.3s ease;
+    }
+
+    .product-card:hover { background: var(--bg-elevated); }
+
+    .card-image-wrap {
+      position: relative;
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .card-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .product-card:hover .card-image-wrap img {
+      transform: scale(1.06);
+    }
+
+    /* Thumbnail strip on hover */
+    .thumb-strip {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      gap: 2px;
+      padding: 2px;
+      background: rgba(12,10,9,0.7);
+      backdrop-filter: blur(4px);
+      transform: translateY(100%);
+      transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+
+    .product-card:hover .thumb-strip { transform: translateY(0); }
+
+    .thumb {
+      flex: 1;
+      aspect-ratio: 1;
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+
+    .thumb:hover, .thumb.active { opacity: 1; }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: none;
+    }
+
+    /* Overlay gradient */
+    .card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 45%);
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      pointer-events: none;
+    }
+
+    .product-card:hover .card-overlay { opacity: 1; }
+
+    /* View button */
+    .view-btn {
+      position: absolute;
+      bottom: 3.5rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      opacity: 0;
+      background: rgba(245,240,235,0.95);
+      color: var(--bg);
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 0.65rem 1.5rem;
+      white-space: nowrap;
+      text-decoration: none;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+      font-weight: 500;
+    }
+
+    .product-card:hover .view-btn {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Card info */
+    .card-info {
+      padding: 1rem 1.1rem 1.25rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-number {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      color: var(--muted);
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1rem;
+      line-height: 1.35;
+      color: var(--cream);
+      margin-bottom: 0.6rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .card-price {
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      color: var(--cream-muted);
+    }
+
+    .card-price .original {
+      text-decoration: line-through;
+      color: var(--muted);
+      margin-right: 0.4rem;
+    }
+
+    .card-price .sale { color: var(--accent-glow); }
+
+    .card-tag {
+      font-size: 0.55rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent-glow);
+      border: 1px solid rgba(176,48,48,0.35);
+      padding: 0.25rem 0.6rem;
+    }
+
+    /* ── Lightbox ── */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      background: rgba(12,10,9,0.96);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    .lightbox.open { display: flex; }
+
+    .lightbox-inner {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 3rem;
+      max-width: 1000px;
+      width: 100%;
+      max-height: 90vh;
+    }
+
+    .lightbox-main-img {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .lightbox-main-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lightbox-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 1.5rem;
+      overflow-y: auto;
+    }
+
+    .lightbox-eyebrow {
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent-glow);
+    }
+
+    .lightbox-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.9rem;
+      line-height: 1.2;
+      color: var(--cream);
+    }
+
+    .lightbox-price {
+      font-size: 0.85rem;
+      color: var(--cream-muted);
+      letter-spacing: 0.05em;
+    }
+
+    .lightbox-price .original {
+      text-decoration: line-through;
+      color: var(--muted);
+      margin-right: 0.5rem;
+    }
+
+    .lightbox-price .sale { color: var(--accent-glow); font-size: 1rem; }
+
+    .lightbox-thumbs {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .lightbox-thumb {
+      width: 60px;
+      height: 60px;
+      overflow: hidden;
+      cursor: pointer;
+      opacity: 0.5;
+      transition: opacity 0.2s;
+      border: 1px solid transparent;
+    }
+
+    .lightbox-thumb:hover, .lightbox-thumb.active {
+      opacity: 1;
+      border-color: var(--accent);
+    }
+
+    .lightbox-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .lightbox-link {
+      display: inline-block;
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--cream);
+      border: 1px solid var(--border);
+      padding: 0.75rem 1.5rem;
+      text-decoration: none;
+      transition: border-color 0.3s, color 0.3s;
+    }
+
+    .lightbox-link:hover { border-color: var(--cream); }
+
+    .lightbox-close {
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--cream-muted);
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .lightbox-close:hover { border-color: var(--cream); color: var(--cream); }
+
+    .lightbox-note {
+      font-size: 0.7rem;
+      color: var(--muted);
+      line-height: 1.7;
+      border-left: 2px solid var(--accent);
+      padding-left: 1rem;
+    }
+
+    /* ── Footer ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem clamp(1.5rem, 5vw, 4rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: 1.1rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .footer-note {
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    /* ── Scroll fade-in ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      .lightbox-inner {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto;
+        max-height: 85vh;
+        overflow-y: auto;
+      }
+      .lightbox-main-img { aspect-ratio: 3/4; }
+      .hero-meta { flex-direction: column; gap: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <span class="logo">Shilla Lace</span>
+    <span class="header-badge">Internal Preview — Mar 2026</span>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <span class="hero-eyebrow">Potential Collection Items</span>
+    <h1>Curated <em>Sourcing</em><br>Preview</h1>
+    <p>A selection of potential pieces sourced from Ellolace via AliExpress, presented for team review and collection consideration.</p>
+    <div class="hero-meta">
+      <span>8 Products</span>
+      <span>Ellolace Brand</span>
+      <span>Lingerie &amp; Intimates</span>
+    </div>
+  </section>
+
+  <!-- Divider -->
+  <div class="divider">
+    <div class="divider-line"></div>
+    <span class="divider-text">Product Selection</span>
+    <div class="divider-line"></div>
+  </div>
+
+  <!-- Grid -->
+  <section class="grid-section">
+    <div class="products-grid" id="productsGrid"></div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span class="footer-logo">Shilla Lace</span>
+    <span class="footer-note">Internal use only — sourcing preview document — March 2026</span>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <div class="lightbox-inner">
+      <div class="lightbox-main-img">
+        <img id="lightboxMainImg" src="" alt="" />
+      </div>
+      <div class="lightbox-info">
+        <span class="lightbox-eyebrow" id="lightboxEyebrow"></span>
+        <h2 class="lightbox-title" id="lightboxTitle"></h2>
+        <div class="lightbox-price" id="lightboxPrice"></div>
+        <div class="lightbox-thumbs" id="lightboxThumbs"></div>
+        <p class="lightbox-note">Prices shown are approximate AliExpress retail prices in EUR. Actual wholesale pricing may vary.</p>
+        <a class="lightbox-link" id="lightboxLink" href="#" target="_blank" rel="noopener">View on AliExpress ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const products = [
+      {
+        id: 1,
+        title: "Elegant Rose Sheer Backless Bodysuit",
+        englishTitle: "Sheer Backless Bodysuit",
+        price: { original: "€19.36", sale: "€5.33" },
+        url: "https://www.aliexpress.com/item/1005010339254158.html",
+        images: [
+          "https://ae01.alicdn.com/kf/Sc08f3ccac0414948b17894f3f4fc7d6fd.jpg",
+          "https://ae01.alicdn.com/kf/Sb3c120805c3d45f0a06bfde18ea2191fM.jpeg",
+          "https://ae01.alicdn.com/kf/Sfd49e5bf19854b189c922e24de16a577P.jpeg",
+          "https://ae01.alicdn.com/kf/S9c25dd7685d74e9da79d7b935ac8af77t.jpeg",
+          "https://ae01.alicdn.com/kf/Sd45b35542e804e149d69d42d6b6a5e230.jpeg",
+          "https://ae01.alicdn.com/kf/S5d4fdf83e9204f2d90eb16806a021e09m.jpg"
+        ],
+        tag: "Bodysuit"
+      },
+      {
+        id: 2,
+        title: "Bow Lace Open Bra 3-Piece Satin Set",
+        englishTitle: "Bow Lace 3-Piece Satin Set",
+        price: { original: "€12.63", sale: "€8.29" },
+        url: "https://www.aliexpress.com/item/1005005218607426.html",
+        images: [
+          "https://ae01.alicdn.com/kf/S5962e78273f64553ba9f22264002c30dy.jpg",
+          "https://ae01.alicdn.com/kf/Se886d614fd9b4e07aa4bcba027d2f32cn.jpg",
+          "https://ae01.alicdn.com/kf/S1365ae7868134b828108a2ca30bd57c6Q.jpg",
+          "https://ae01.alicdn.com/kf/S902fcdb1bd5c460ca34089c018b2fba0z.jpg",
+          "https://ae01.alicdn.com/kf/S561ed05c6a704742829ca2135a415af6Z.jpg",
+          "https://ae01.alicdn.com/kf/S004c2514238d460d917e9a7de7a17e13P.jpg"
+        ],
+        tag: "Lingerie Set"
+      },
+      {
+        id: 3,
+        title: "Tassel Lace Open Bra See-Through Set",
+        englishTitle: "Tassel Lace See-Through Set",
+        price: { original: "€11.98", sale: "€7.64" },
+        url: "https://www.aliexpress.com/item/1005005253761652.html",
+        images: [
+          "https://ae01.alicdn.com/kf/Sbec08c44f3314720b7ff469c6aa11d1fR.jpg",
+          "https://ae01.alicdn.com/kf/S5074514b09f3434688d9c611cbc0fa81T.jpg",
+          "https://ae01.alicdn.com/kf/S83574ebbf81d45d1897411d5363bb545g.jpg",
+          "https://ae01.alicdn.com/kf/S37ad411cf5e24d5fa1b90577fdc81203i.jpg",
+          "https://ae01.alicdn.com/kf/S658344e9e3a0446fa4c46c41c5f795d53.jpg",
+          "https://ae01.alicdn.com/kf/Sf593a2dda26c40399e290053b3ed29edl.jpg"
+        ],
+        tag: "Exotic Set"
+      },
+      {
+        id: 4,
+        title: "Fishnet Bodysuit Fantasy Lingerie Set",
+        englishTitle: "Fishnet Bodysuit Set",
+        price: { original: "€18.78", sale: "€6.67" },
+        url: "https://www.aliexpress.com/item/1005009137916579.html",
+        images: [
+          "https://ae01.alicdn.com/kf/S6202d5f801c242afa5760269ae8becdaP.png",
+          "https://ae01.alicdn.com/kf/Sfe52567526d1490c9fa5f8feef03bc42c.jpg",
+          "https://ae01.alicdn.com/kf/Sc7418beb973e4c609b579bb3911e198cY.jpg",
+          "https://ae01.alicdn.com/kf/Sf4ea3f95739f42fca1cbe9c0cab391f5A.jpg",
+          "https://ae01.alicdn.com/kf/S1e960bb0cce84c409ea6b083ff398e54j.jpg",
+          "https://ae01.alicdn.com/kf/Sca189395e1444a5aa0f8ab830a47c452u.jpg"
+        ],
+        tag: "Bodysuit"
+      },
+      {
+        id: 5,
+        title: "Bow Lace Silk Lingerie with Garter & Thong",
+        englishTitle: "Bow Lace Silk Set with Garter",
+        price: { original: "€18.70", sale: "€14.36" },
+        url: "https://www.aliexpress.com/item/1005005859200635.html",
+        images: [
+          "https://ae01.alicdn.com/kf/Se58ce4f57dd84f7f8d8fa5e2a8cc5771h.jpg",
+          "https://ae01.alicdn.com/kf/S37805de3f3734c07a047b32d04c567b10.jpg",
+          "https://ae01.alicdn.com/kf/Se39906136e6448b89a0d32942d06c622p.jpg",
+          "https://ae01.alicdn.com/kf/S6734c624be7840efaf3448cebd1e01e6e.jpg",
+          "https://ae01.alicdn.com/kf/Sa24b68c64248451796b7498a4d45d007C.jpg",
+          "https://ae01.alicdn.com/kf/S5ccd63634902461eaa692985896ca399s.jpg"
+        ],
+        tag: "Lingerie Set"
+      },
+      {
+        id: 6,
+        title: "Premium Diamond Bra with Necklace & Gloves",
+        englishTitle: "Diamond Bra Luxury Set",
+        price: { original: "€29.56", sale: "€11.62" },
+        url: "https://www.aliexpress.com/item/1005009186836314.html",
+        images: [
+          "https://ae01.alicdn.com/kf/Sea433fed841047aea87da89fe5bf759dS.jpg",
+          "https://ae01.alicdn.com/kf/S70603b8bc5bb419a9a367b7d5c46f641o.jpeg",
+          "https://ae01.alicdn.com/kf/Sc41930fc3dfd4cf295e4e555c710d84fH.jpeg",
+          "https://ae01.alicdn.com/kf/S9cd17a6ada11455580832db2c02a4f15H.jpeg",
+          "https://ae01.alicdn.com/kf/Sd1b1bb22c78441ee9f9c9cada5219c3bo.jpeg",
+          "https://ae01.alicdn.com/kf/Sb990dfb385d24b00a51fe6bc8d1b47814.jpeg"
+        ],
+        tag: "Premium Set"
+      },
+      {
+        id: 7,
+        title: "Strapless Half-Cup 5-Piece Bodysuit Kit",
+        englishTitle: "Strapless 5-Piece Bodysuit Kit",
+        price: { original: "€25.31", sale: "€8.31" },
+        url: "https://www.aliexpress.com/item/1005010049343539.html",
+        images: [
+          "https://ae01.alicdn.com/kf/S8f86c5ca926d47a399002b5c53c59ca4K.jpg",
+          "https://ae01.alicdn.com/kf/S236c6905fc054567afbd1d4d4e4d6cfcP.jpg",
+          "https://ae01.alicdn.com/kf/S34fae7039708461e87a13eeb3b6d0ea0k.jpg",
+          "https://ae01.alicdn.com/kf/Sa41b04e5617c4f2eac4b9adbe7caa090F.jpg",
+          "https://ae01.alicdn.com/kf/S4a2d21a1faeb4b1faf34de83906ecd05G.jpg",
+          "https://ae01.alicdn.com/kf/Saae88e58e8ce4ffbb02c1ad730bca618e.jpg"
+        ],
+        tag: "Bodysuit"
+      },
+      {
+        id: 8,
+        title: "Faux Leather Latex Erotic Costume Set",
+        englishTitle: "Faux Leather Costume Set",
+        price: { original: "€27.40", sale: "€10.46" },
+        url: "https://www.aliexpress.com/item/1005008844450407.html",
+        images: [
+          "https://ae01.alicdn.com/kf/Sae2833a642624753aff71df8b13fa3e5c.jpg",
+          "https://ae01.alicdn.com/kf/S712ab3f40cec46b493c99a51ad972c5eG.jpg",
+          "https://ae01.alicdn.com/kf/S3b51e77d53b64ebbaba83d36e0a05d29W.jpg",
+          "https://ae01.alicdn.com/kf/S9d284b0fc59c44eb8c904e03c4cbcfbbu.jpg",
+          "https://ae01.alicdn.com/kf/Sa1621be3a6ce45b48549298e6a41076d7.jpg",
+          "https://ae01.alicdn.com/kf/S6922cc760df94d6f9a9466365c1a388ej.jpg"
+        ],
+        tag: "Costume"
+      }
+    ];
+
+    // ── Render grid ──
+    const grid = document.getElementById('productsGrid');
+
+    products.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'product-card fade-in';
+      card.style.transitionDelay = `${(i % 4) * 80}ms`;
+
+      const thumbsHTML = p.images.slice(1).map((img, ti) => `
+        <div class="thumb" data-img="${img}" data-idx="${ti + 1}">
+          <img src="${img}_100x100.jpg" onerror="this.src='${img}'" alt="View ${ti + 2}" loading="lazy" />
+        </div>
+      `).join('');
+
+      card.innerHTML = `
+        <div class="card-image-wrap">
+          <img src="${p.images[0]}" alt="${p.title}" loading="${i < 4 ? 'eager' : 'lazy'}" />
+          <div class="card-overlay"></div>
+          <div class="thumb-strip">${thumbsHTML}</div>
+          <a class="view-btn" href="${p.url}" target="_blank" rel="noopener" onclick="event.stopPropagation()">View Source ↗</a>
+        </div>
+        <div class="card-info">
+          <div class="card-number">No. ${String(p.id).padStart(2, '0')}</div>
+          <h3 class="card-title">${p.title}</h3>
+          <div class="card-footer">
+            <div class="card-price">
+              <span class="original">${p.price.original}</span>
+              <span class="sale">${p.price.sale}</span>
+            </div>
+            <span class="card-tag">${p.tag}</span>
+          </div>
+        </div>
+      `;
+
+      // Thumbnail swap on hover
+      card.querySelectorAll('.thumb').forEach(thumb => {
+        thumb.addEventListener('mouseenter', () => {
+          const newSrc = thumb.dataset.img;
+          card.querySelector('.card-image-wrap > img').src = newSrc;
+          card.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+          thumb.classList.add('active');
+        });
+      });
+
+      // Open lightbox on card click
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.view-btn')) return;
+        openLightbox(p);
+      });
+
+      grid.appendChild(card);
+    });
+
+    // ── Lightbox ──
+    const lightbox = document.getElementById('lightbox');
+    const lbMainImg = document.getElementById('lightboxMainImg');
+    const lbTitle = document.getElementById('lightboxTitle');
+    const lbEyebrow = document.getElementById('lightboxEyebrow');
+    const lbPrice = document.getElementById('lightboxPrice');
+    const lbThumbs = document.getElementById('lightboxThumbs');
+    const lbLink = document.getElementById('lightboxLink');
+    const lbClose = document.getElementById('lightboxClose');
+
+    function openLightbox(p) {
+      lbMainImg.src = p.images[0];
+      lbMainImg.alt = p.title;
+      lbTitle.textContent = p.title;
+      lbEyebrow.textContent = `No. ${String(p.id).padStart(2, '0')} — ${p.tag}`;
+      lbPrice.innerHTML = `<span class="original">${p.price.original}</span> <span class="sale">${p.price.sale}</span>`;
+      lbLink.href = p.url;
+
+      lbThumbs.innerHTML = p.images.map((img, i) => `
+        <div class="lightbox-thumb ${i === 0 ? 'active' : ''}" data-img="${img}">
+          <img src="${img}" alt="View ${i + 1}" loading="lazy" />
+        </div>
+      `).join('');
+
+      lbThumbs.querySelectorAll('.lightbox-thumb').forEach(t => {
+        t.addEventListener('click', () => {
+          lbMainImg.src = t.dataset.img;
+          lbThumbs.querySelectorAll('.lightbox-thumb').forEach(x => x.classList.remove('active'));
+          t.classList.add('active');
+        });
+      });
+
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    // ── Scroll fade-in ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>

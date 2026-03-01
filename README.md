@@ -1,36 +1,84 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shilla Lace — Headless Next.js Storefront
+
+A high-performance, conversion-focused Next.js storefront for [shillalace.com](https://shillalace.com), powered by Shopify's Storefront API.
+
+## Tech Stack
+
+- **Next.js 15** (App Router, React Server Components, Server Actions)
+- **TypeScript**
+- **Tailwind CSS v4**
+- **GSAP** (ScrollTrigger) + **Lenis** (smooth scroll)
+- **Shopify Storefront API** (GraphQL)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18.18+
+- pnpm
+- A Shopify store with Storefront API access
+
+### Setup
+
+1. Clone the repository
+2. Copy `.env.example` to `.env.local` and fill in your Shopify credentials:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+cp .env.example .env.local
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. Install dependencies:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+4. Run the development server:
 
-## Learn More
+```bash
+pnpm dev
+```
 
-To learn more about Next.js, take a look at the following resources:
+Open [http://localhost:3000](http://localhost:3000).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Environment Variables
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+| Variable | Description |
+|---|---|
+| `SHOPIFY_STORE_DOMAIN` | Your Shopify store domain (e.g., `shillalace.myshopify.com`) |
+| `SHOPIFY_STOREFRONT_ACCESS_TOKEN` | Storefront API access token |
+| `SHOPIFY_REVALIDATION_SECRET` | Secret for webhook-based cache revalidation |
+| `KLAVIYO_API_KEY` | Klaviyo private API key |
+| `KLAVIYO_LIST_ID` | Klaviyo list ID for newsletter |
+| `SITE_URL` | Your site URL (e.g., `https://shillalace.com`) |
 
-## Deploy on Vercel
+## Shopify Setup
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. In your Shopify admin, go to **Settings > Apps and sales channels > Develop apps**
+2. Create a new app and configure Storefront API scopes:
+   - `unauthenticated_read_product_listings`
+   - `unauthenticated_read_product_inventory`
+   - `unauthenticated_read_checkouts`
+   - `unauthenticated_write_checkouts`
+   - `unauthenticated_read_content`
+3. Copy the Storefront API access token to your `.env.local`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Webhook Setup (Cache Revalidation)
+
+Create webhooks in Shopify pointing to `https://your-domain.com/api/revalidate`:
+- `products/create`
+- `products/update`
+- `products/delete`
+- `collections/create`
+- `collections/update`
+- `collections/delete`
+
+## Deployment
+
+Deploy to Vercel:
+
+```bash
+vercel
+```
+
+Or connect your GitHub repository to Vercel for automatic deployments.

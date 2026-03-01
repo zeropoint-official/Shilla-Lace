@@ -1,0 +1,102 @@
+"use client";
+
+import { useRef, useEffect } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { gsap, ScrollTrigger } from "@/lib/gsap/config";
+
+export function BrandStory() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    if (prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      gsap.from(imageRef.current, {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 80%",
+          once: true,
+        },
+      });
+
+      const textElements = textRef.current?.children;
+      if (textElements) {
+        gsap.from(Array.from(textElements), {
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out",
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: textRef.current,
+            start: "top 85%",
+            once: true,
+          },
+        });
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
+  return (
+    <section ref={sectionRef} className="relative py-16 md:py-24 lg:py-32">
+      <div className="max-w-[1400px] mx-auto px-5 md:px-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          <div ref={imageRef} className="relative aspect-[4/5] overflow-hidden">
+            <Image
+              src="/images/hf_20260226_005118_c17da2e7-f87c-447c-8ef5-70c67b4aa200.png"
+              alt="Shilla Lace brand story"
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+          </div>
+
+          <div ref={textRef} className="lg:pl-6">
+            <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-accent-light mb-4">
+              Our Story
+            </p>
+
+            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl text-cream font-light leading-[1.1] mb-6 md:mb-8">
+              Celebrating Confidence
+              <br />
+              <span className="italic text-cream/60">Since 2021</span>
+            </h2>
+
+            <p className="text-xs md:text-sm text-cream/40 leading-relaxed mb-4 md:mb-5 max-w-lg">
+              Founded in 2021, Shilla Lace is dedicated to celebrating
+              confidence and embracing individuality. We believe that every
+              woman deserves to feel beautiful, powerful, and unapologetically
+              herself.
+            </p>
+
+            <p className="text-xs md:text-sm text-cream/40 leading-relaxed mb-8 md:mb-10 max-w-lg">
+              Each piece in our collection is thoughtfully designed to empower
+              women to express their sensuality with elegance and style,
+              making every moment an experience of beauty and passion.
+            </p>
+
+            <Link
+              href="/pages/about-shilla-lace"
+              className="inline-flex items-center gap-3 text-[10px] md:text-xs tracking-[0.25em] uppercase text-cream/50 hover:text-cream transition-colors duration-400 group"
+            >
+              Learn More
+              <span className="block w-6 h-px bg-current transition-all duration-400 group-hover:w-10" />
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
