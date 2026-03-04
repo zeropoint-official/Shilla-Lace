@@ -18,18 +18,20 @@ export function NewsletterSection() {
     ).matches;
     if (prefersReducedMotion) return;
 
+    const isMobile = window.innerWidth < 768;
+
     const ctx = gsap.context(() => {
       const elements = contentRef.current?.children;
       if (elements) {
         gsap.from(Array.from(elements), {
-          y: 30,
+          y: isMobile ? 15 : 30,
           opacity: 0,
-          duration: 0.8,
+          duration: isMobile ? 0.4 : 0.8,
           ease: "power3.out",
-          stagger: 0.1,
+          stagger: isMobile ? 0.05 : 0.1,
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: "top 85%",
+            start: isMobile ? "top 98%" : "top 85%",
             once: true,
           },
         });

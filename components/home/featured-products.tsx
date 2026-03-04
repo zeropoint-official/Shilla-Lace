@@ -107,27 +107,29 @@ export function FeaturedProducts({
     ).matches;
     if (prefersReducedMotion) return;
 
+    const isMobile = window.innerWidth < 768;
+
     const ctx = gsap.context(() => {
       gsap.from(lineRef.current, {
         scaleX: 0,
         transformOrigin: "left center",
-        duration: 1.2,
+        duration: isMobile ? 0.6 : 1.2,
         ease: "power3.out",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 85%",
+          start: isMobile ? "top 98%" : "top 85%",
           once: true,
         },
       });
 
       gsap.from(headerRef.current, {
-        y: 30,
+        y: isMobile ? 15 : 30,
         opacity: 0,
-        duration: 0.9,
+        duration: isMobile ? 0.5 : 0.9,
         ease: "power3.out",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 85%",
+          start: isMobile ? "top 98%" : "top 85%",
           once: true,
         },
       });
@@ -135,14 +137,14 @@ export function FeaturedProducts({
       const allCards = layoutRef.current?.querySelectorAll("[data-card]");
       if (allCards) {
         gsap.from(Array.from(allCards), {
-          y: 60,
+          y: isMobile ? 20 : 60,
           opacity: 0,
-          duration: 0.8,
+          duration: isMobile ? 0.4 : 0.8,
           ease: "power3.out",
-          stagger: 0.08,
+          stagger: isMobile ? 0.04 : 0.08,
           scrollTrigger: {
             trigger: layoutRef.current,
-            start: "top 85%",
+            start: isMobile ? "top 98%" : "top 85%",
             once: true,
           },
         });

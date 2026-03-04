@@ -70,15 +70,17 @@ export function Testimonials() {
     ).matches;
     if (prefersReducedMotion) return;
 
+    const isMobile = window.innerWidth < 768;
+
     const ctx = gsap.context(() => {
       gsap.from(headerRef.current, {
-        y: 30,
+        y: isMobile ? 15 : 30,
         opacity: 0,
-        duration: 0.9,
+        duration: isMobile ? 0.5 : 0.9,
         ease: "power3.out",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 85%",
+          start: isMobile ? "top 98%" : "top 85%",
           once: true,
         },
       });
@@ -86,14 +88,14 @@ export function Testimonials() {
       const cards = gridRef.current?.children;
       if (cards) {
         gsap.from(Array.from(cards), {
-          y: 50,
+          y: isMobile ? 20 : 50,
           opacity: 0,
-          duration: 0.8,
+          duration: isMobile ? 0.4 : 0.8,
           ease: "power3.out",
-          stagger: 0.12,
+          stagger: isMobile ? 0.06 : 0.12,
           scrollTrigger: {
             trigger: gridRef.current,
-            start: "top 85%",
+            start: isMobile ? "top 98%" : "top 85%",
             once: true,
           },
         });

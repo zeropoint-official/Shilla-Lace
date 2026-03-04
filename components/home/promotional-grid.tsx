@@ -149,9 +149,11 @@ export function PromotionalGrid() {
     ).matches;
     if (prefersReducedMotion) return;
 
+    const isMobile = window.innerWidth < 768;
+
     const ctx = gsap.context(() => {
       gsap.to(bannerRef.current, {
-        yPercent: 15,
+        yPercent: isMobile ? 8 : 15,
         ease: "none",
         scrollTrigger: {
           trigger: sectionRef.current,
@@ -164,27 +166,27 @@ export function PromotionalGrid() {
       const contentChildren = bannerContentRef.current?.children;
       if (contentChildren) {
         gsap.from(Array.from(contentChildren), {
-          y: 50,
+          y: isMobile ? 20 : 50,
           opacity: 0,
-          duration: 1,
+          duration: isMobile ? 0.5 : 1,
           ease: "power3.out",
-          stagger: 0.12,
+          stagger: isMobile ? 0.06 : 0.12,
           scrollTrigger: {
             trigger: bannerContentRef.current,
-            start: "top 80%",
+            start: isMobile ? "top 98%" : "top 80%",
             once: true,
           },
         });
       }
 
       gsap.from(gridHeaderRef.current, {
-        y: 30,
+        y: isMobile ? 15 : 30,
         opacity: 0,
-        duration: 0.9,
+        duration: isMobile ? 0.5 : 0.9,
         ease: "power3.out",
         scrollTrigger: {
           trigger: gridHeaderRef.current,
-          start: "top 88%",
+          start: isMobile ? "top 98%" : "top 88%",
           once: true,
         },
       });
@@ -192,14 +194,14 @@ export function PromotionalGrid() {
       const cards = gridRef.current?.children;
       if (cards) {
         gsap.from(Array.from(cards), {
-          y: 40,
+          y: isMobile ? 20 : 40,
           opacity: 0,
-          duration: 0.8,
+          duration: isMobile ? 0.4 : 0.8,
           ease: "power3.out",
-          stagger: 0.08,
+          stagger: isMobile ? 0.04 : 0.08,
           scrollTrigger: {
             trigger: gridRef.current,
-            start: "top 90%",
+            start: isMobile ? "top 98%" : "top 90%",
             once: true,
           },
         });
