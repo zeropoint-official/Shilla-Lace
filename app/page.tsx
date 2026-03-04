@@ -7,7 +7,6 @@ import { PromotionalGrid } from "@/components/home/promotional-grid";
 import { BrandStory } from "@/components/home/brand-story";
 import { Testimonials } from "@/components/home/testimonials";
 import { NewsletterSection } from "@/components/home/newsletter-section";
-import { SocialFeed } from "@/components/home/social-feed";
 import { ProductGridSkeleton } from "@/components/ui/skeletons";
 
 export const dynamic = "force-dynamic";
@@ -58,9 +57,6 @@ export default async function HomePage() {
 
       {/* Newsletter */}
       <NewsletterSection />
-
-      {/* 12. Social Feed */}
-      <SocialFeed />
     </>
   );
 }

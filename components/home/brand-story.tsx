@@ -55,8 +55,8 @@ export function BrandStory() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div ref={imageRef} className="relative aspect-[4/5] overflow-hidden">
             <Image
-              src="/Upscaled/upscalemedia-transformed.png"
-              alt="Shilla Lace — rain and red light editorial"
+              src="/Upscaled/upscalemedia-transformed (1).png"
+              alt="Shilla Lace — candlelit red lace editorial"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"

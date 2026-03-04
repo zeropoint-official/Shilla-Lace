@@ -64,10 +64,10 @@ export function Header({ openCart }: { openCart: () => void }) {
               </nav>
             </div>
 
-            {/* Center: logo */}
+            {/* Center: logo — centered on mobile, shifted left on desktop */}
             <Link
               href="/"
-              className="flex justify-center min-w-0"
+              className="flex justify-center lg:justify-start min-w-0"
             >
               <span className="font-heading text-lg sm:text-xl md:text-2xl tracking-[0.12em] sm:tracking-[0.15em] text-cream font-light whitespace-nowrap">
                 SHILLA LACE
