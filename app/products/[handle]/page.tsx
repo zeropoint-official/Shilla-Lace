@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProduct, getProductRecommendations } from "@/lib/shopify";
-import { ProductDetail } from "@/components/product/product-detail";
+import { ProductPageClient } from "@/components/product/product-page-client";
 import { BenefitsBar } from "@/components/product/benefits-bar";
 import { WhyShillaLace } from "@/components/product/why-shilla-lace";
 import { RecommendedProducts } from "@/components/product/recommended-products";
@@ -58,7 +58,7 @@ export default async function ProductPage({ params }: Props) {
     <>
       <ProductJsonLd product={product} />
 
-      <ProductDetail product={product} />
+      <ProductPageClient product={product} />
 
       <BenefitsBar />
 

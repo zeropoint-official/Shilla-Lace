@@ -78,26 +78,26 @@ export function WhyShillaLace() {
           </div>
 
           <div ref={contentRef}>
-            <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-accent-light mb-3">
+            <p className="text-[11px] md:text-xs tracking-[0.3em] uppercase text-accent-light mb-3">
               The Shilla Difference
             </p>
             <h2 className="font-heading text-3xl md:text-4xl text-cream font-light mb-8 md:mb-10 leading-[1.1]">
               Why Women Choose
               <br />
-              <span className="italic text-cream/60">Shilla Lace</span>
+              <span className="italic text-cream/70">Shilla Lace</span>
             </h2>
 
             <div className="space-y-6 md:space-y-8">
               {valueProps.map((prop, i) => (
                 <div key={prop.title} className="flex gap-4">
-                  <div className="shrink-0 w-8 h-8 flex items-center justify-center border border-accent/30 text-accent-light text-[10px]">
+                  <div className="shrink-0 w-8 h-8 flex items-center justify-center border border-accent/30 text-accent-light text-[11px]">
                     {String(i + 1).padStart(2, "0")}
                   </div>
                   <div>
-                    <h3 className="text-xs md:text-sm text-cream mb-1 tracking-wide">
+                    <h3 className="text-sm md:text-base text-cream mb-1 tracking-wide">
                       {prop.title}
                     </h3>
-                    <p className="text-[11px] md:text-xs text-cream/35 leading-relaxed">
+                    <p className="text-xs md:text-[13px] text-cream/50 leading-relaxed">
                       {prop.desc}
                     </p>
                   </div>
@@ -106,12 +106,12 @@ export function WhyShillaLace() {
             </div>
 
             {/* Social proof numbers */}
-            <div className="grid grid-cols-3 gap-4 mt-10 pt-8 border-t border-cream/5">
+            <div className="grid grid-cols-3 gap-4 mt-10 pt-8 border-t border-cream/8">
               <div>
                 <p className="font-heading text-2xl md:text-3xl text-cream font-light">
                   15k+
                 </p>
-                <p className="text-[9px] text-cream/30 tracking-wide mt-0.5">
+                <p className="text-[11px] text-cream/45 tracking-wide mt-0.5">
                   Happy Customers
                 </p>
               </div>
@@ -119,7 +119,7 @@ export function WhyShillaLace() {
                 <p className="font-heading text-2xl md:text-3xl text-cream font-light">
                   4.8
                 </p>
-                <p className="text-[9px] text-cream/30 tracking-wide mt-0.5">
+                <p className="text-[11px] text-cream/45 tracking-wide mt-0.5">
                   Average Rating
                 </p>
               </div>
@@ -127,7 +127,7 @@ export function WhyShillaLace() {
                 <p className="font-heading text-2xl md:text-3xl text-cream font-light">
                   50+
                 </p>
-                <p className="text-[9px] text-cream/30 tracking-wide mt-0.5">
+                <p className="text-[11px] text-cream/45 tracking-wide mt-0.5">
                   Countries Shipped
                 </p>
               </div>

@@ -55,12 +55,14 @@ export function BrandStory() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
           <div ref={imageRef} className="relative aspect-[4/5] overflow-hidden">
             <Image
-              src="/images/hf_20260226_005118_c17da2e7-f87c-447c-8ef5-70c67b4aa200.png"
-              alt="Shilla Lace brand story"
+              src="/Upscaled/upscalemedia-transformed.png"
+              alt="Shilla Lace — rain and red light editorial"
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"
+              quality={75}
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-bg/30 to-transparent" />
           </div>
 
           <div ref={textRef} className="lg:pl-6">
@@ -74,17 +76,25 @@ export function BrandStory() {
               <span className="italic text-cream/60">Since 2021</span>
             </h2>
 
+            {/* Pull quote */}
+            <blockquote className="relative pl-5 border-l-2 border-accent/40 mb-6 md:mb-8">
+              <p className="font-heading text-lg md:text-xl lg:text-2xl italic text-cream/60 leading-relaxed">
+                &ldquo;Every woman deserves to feel beautiful, powerful,
+                and unapologetically herself.&rdquo;
+              </p>
+            </blockquote>
+
             <p className="text-xs md:text-sm text-cream/40 leading-relaxed mb-4 md:mb-5 max-w-lg">
               Founded in 2021, Shilla Lace is dedicated to celebrating
-              confidence and embracing individuality. We believe that every
-              woman deserves to feel beautiful, powerful, and unapologetically
-              herself.
+              confidence and embracing individuality. Each piece in our
+              collection is thoughtfully designed to empower women to express
+              their sensuality with elegance and style.
             </p>
 
             <p className="text-xs md:text-sm text-cream/40 leading-relaxed mb-8 md:mb-10 max-w-lg">
-              Each piece in our collection is thoughtfully designed to empower
-              women to express their sensuality with elegance and style,
-              making every moment an experience of beauty and passion.
+              From delicate lace to bold leather, every creation is crafted
+              to make every moment an experience of beauty, passion, and
+              unapologetic self-expression.
             </p>
 
             <Link

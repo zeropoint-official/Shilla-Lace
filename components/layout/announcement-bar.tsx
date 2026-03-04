@@ -14,12 +14,12 @@ export function AnnouncementBar() {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % announcements.length);
-    }, 4000);
+    }, 6500);
     return () => clearInterval(interval);
   }, []);
 
   return (
-    <div className="bg-accent text-cream/90 text-center py-2 px-4 text-[9px] md:text-[10px] tracking-[0.3em] uppercase relative overflow-hidden">
+    <div className="bg-accent text-cream/90 text-center py-2 px-4 text-[10px] md:text-[11px] tracking-[0.3em] uppercase relative overflow-hidden">
       <div className="relative h-4">
         {announcements.map((text, i) => (
           <span

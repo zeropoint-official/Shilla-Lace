@@ -5,6 +5,7 @@ import "./globals.css";
 import { getCart } from "@/lib/shopify";
 import { CartProvider } from "@/providers/cart-provider";
 import { GSAPProvider } from "@/providers/gsap-provider";
+import { LenisProvider } from "@/providers/lenis-provider";
 import { LayoutShell } from "@/components/layout/layout-shell";
 import { Footer } from "@/components/layout/footer";
 import { OrganizationJsonLd } from "@/components/seo/organization-jsonld";
@@ -57,8 +58,10 @@ export default async function RootLayout({
         <OrganizationJsonLd />
         <CartProvider cart={cart}>
           <GSAPProvider>
-            <LayoutShell>{children}</LayoutShell>
-            <Footer />
+            <LenisProvider>
+              <LayoutShell>{children}</LayoutShell>
+              <Footer />
+            </LenisProvider>
           </GSAPProvider>
         </CartProvider>
       </body>

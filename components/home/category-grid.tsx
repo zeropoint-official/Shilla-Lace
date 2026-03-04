@@ -9,13 +9,15 @@ type CategoryItem = {
   title: string;
   href: string;
   image: string;
+  span?: boolean;
 };
 
 const categories: CategoryItem[] = [
   {
     title: "Lingerie",
     href: "/collections/lingerie",
-    image: "/images/hf_20260226_004747_6db1d6b2-7c1f-4f78-91ce-fd3a175908b7.png",
+    image: "/Upscaled/upscalemedia-transformed (4).png",
+    span: true,
   },
   {
     title: "Bodysuits",
@@ -79,7 +81,7 @@ export function CategoryGrid() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-16 md:py-24 lg:py-32 bg-bg-elevated">
+    <section ref={sectionRef} className="relative py-16 md:py-24 lg:py-32">
       <div className="max-w-[1400px] mx-auto px-5 md:px-10">
         <div ref={headerRef} className="text-center mb-10 md:mb-14">
           <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-accent-light mb-2 md:mb-3">
@@ -90,27 +92,39 @@ export function CategoryGrid() {
           </h2>
         </div>
 
+        {/* Asymmetric grid: first item spans 2 cols on desktop */}
         <div
           ref={gridRef}
-          className="grid grid-cols-2 md:grid-cols-4 gap-2.5 md:gap-3.5"
+          className="grid grid-cols-2 md:grid-cols-4 md:grid-rows-2 gap-2.5 md:gap-3.5"
         >
           {categories.map((cat) => (
             <Link
               key={cat.title}
               href={cat.href}
-              className="group relative overflow-hidden aspect-[3/4]"
+              className={`group relative overflow-hidden ${
+                cat.span
+                  ? "col-span-2 row-span-2 aspect-[3/4] md:aspect-auto"
+                  : "aspect-[3/4]"
+              }`}
             >
               <Image
                 src={cat.image}
                 alt={cat.title}
                 fill
                 className="object-cover transition-transform duration-[1000ms] ease-out group-hover:scale-105"
-                sizes="(max-width: 768px) 50vw, 25vw"
+                sizes={cat.span ? "(max-width: 768px) 100vw, 50vw" : "(max-width: 768px) 50vw, 25vw"}
+                quality={75}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent group-hover:from-black/80 transition-all duration-500" />
               <div className="absolute inset-0 border border-cream/0 group-hover:border-cream/10 transition-colors duration-500" />
-              <div className="absolute bottom-0 inset-x-0 p-4 md:p-5">
-                <h3 className="font-heading text-lg md:text-xl lg:text-2xl text-cream font-light mb-0.5">
+              <div className="absolute bottom-0 inset-x-0 p-4 md:p-6">
+                <h3
+                  className={`font-heading text-cream font-light mb-1 ${
+                    cat.span
+                      ? "text-2xl md:text-3xl lg:text-4xl"
+                      : "text-lg md:text-xl lg:text-2xl"
+                  }`}
+                >
                   {cat.title}
                 </h3>
                 <div className="flex items-center gap-2 text-cream/40 group-hover:text-cream/70 transition-colors duration-500">
@@ -118,7 +132,7 @@ export function CategoryGrid() {
                     Explore
                   </span>
                   <svg
-                    className="w-3 h-3 translate-x-0 group-hover:translate-x-1 transition-transform duration-400"
+                    className="w-3 h-3 translate-x-0 group-hover:translate-x-1.5 transition-transform duration-400"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"

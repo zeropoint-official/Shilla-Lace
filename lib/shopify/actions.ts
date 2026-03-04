@@ -23,7 +23,7 @@ async function setCartId(cartId: string) {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
     sameSite: "lax",
-    maxAge: 60 * 60 * 24 * 30, // 30 days
+    maxAge: 60 * 60 * 24 * 30,
     path: "/",
   });
 }
@@ -55,6 +55,37 @@ export async function addItem(
     revalidateTag("cart", "max");
   } catch (e) {
     return "Error adding item to cart";
+  }
+}
+
+export async function addItemAndGetCheckoutUrl(
+  selectedVariantId: string
+): Promise<string | undefined> {
+  if (!selectedVariantId) return undefined;
+
+  let cartId = await getCartId();
+  let cart;
+
+  if (cartId) {
+    cart = await getCart(cartId);
+  }
+
+  if (!cartId || !cart) {
+    cart = await createCart();
+    cartId = cart.id;
+    await setCartId(cartId);
+  }
+
+  try {
+    await addToCart(cartId, [
+      { merchandiseId: selectedVariantId, quantity: 1 },
+    ]);
+    revalidateTag("cart", "max");
+
+    const updatedCart = await getCart(cartId);
+    return updatedCart?.checkoutUrl;
+  } catch (e) {
+    return undefined;
   }
 }
 

@@ -74,16 +74,16 @@ export function BenefitsBar() {
   }, []);
 
   return (
-    <section ref={ref} className="py-10 md:py-14 border-y border-cream/5">
+    <section ref={ref} className="py-10 md:py-14 border-y border-cream/8">
       <div className="max-w-[1400px] mx-auto px-5 md:px-10">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
           {benefits.map((b) => (
             <div key={b.title} className="benefit-item flex flex-col items-center text-center">
               <div className="text-accent-light mb-2.5">{b.icon}</div>
-              <h3 className="text-[10px] md:text-xs tracking-[0.15em] uppercase text-cream/70 mb-0.5">
+              <h3 className="text-[11px] md:text-xs tracking-[0.15em] uppercase text-cream/80 mb-1">
                 {b.title}
               </h3>
-              <p className="text-[9px] md:text-[10px] text-cream/30">
+              <p className="text-[11px] md:text-xs text-cream/45">
                 {b.desc}
               </p>
             </div>
