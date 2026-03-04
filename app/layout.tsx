@@ -8,7 +8,6 @@ import { GSAPProvider } from "@/providers/gsap-provider";
 import { LenisProvider } from "@/providers/lenis-provider";
 import { LayoutShell } from "@/components/layout/layout-shell";
 import { Footer } from "@/components/layout/footer";
-import { OrganizationJsonLd } from "@/components/seo/organization-jsonld";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -31,6 +30,14 @@ export const metadata: Metadata = {
   description:
     "Redefining intimacy with luxurious lingerie. Celebrating confidence and embracing individuality.",
   metadataBase: new URL(process.env.SITE_URL || "https://shillalace.com"),
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
   openGraph: {
     type: "website",
     siteName: "Shilla Lace",
@@ -55,7 +62,6 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${cormorant.variable}`}>
       <body>
-        <OrganizationJsonLd />
         <CartProvider cart={cart}>
           <GSAPProvider>
             <LenisProvider>

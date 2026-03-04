@@ -6,6 +6,7 @@ import { FeaturedProducts } from "@/components/home/featured-products";
 import { EditorialStrip } from "@/components/home/editorial-strip";
 import { CategoryGrid } from "@/components/home/category-grid";
 import { ParallaxCTA } from "@/components/home/parallax-cta";
+import { PromotionalGrid } from "@/components/home/promotional-grid";
 import { IntimateCollection } from "@/components/home/intimate-collection";
 import { BrandStory } from "@/components/home/brand-story";
 import { Testimonials } from "@/components/home/testimonials";
@@ -51,16 +52,19 @@ export default async function HomePage() {
         <BestsellersLoader />
       </Suspense>
 
-      {/* 4. Editorial Lookbook Strip */}
+      {/* 4. Promotional Grid — Banner + Curated Scroll + Editorial */}
+      <PromotionalGrid />
+
+      {/* 5. Editorial Lookbook Strip */}
       <EditorialStrip />
 
-      {/* 5. Shop by Category */}
+      {/* 6. Shop by Category */}
       <CategoryGrid />
 
-      {/* 6. Full-Width Parallax CTA */}
+      {/* 7. Full-Width Parallax CTA */}
       <ParallaxCTA />
 
-      {/* 7. The Intimate Edit Collection (Mock/Sourcing) */}
+      {/* 8. The Intimate Edit Collection (Mock/Sourcing) */}
       <IntimateCollection />
 
       {/* 8. Brand Story */}
