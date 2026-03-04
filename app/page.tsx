@@ -6,7 +6,6 @@ import { FeaturedProducts } from "@/components/home/featured-products";
 import { PromotionalGrid } from "@/components/home/promotional-grid";
 import { BrandStory } from "@/components/home/brand-story";
 import { Testimonials } from "@/components/home/testimonials";
-import { ValueProps } from "@/components/home/value-props";
 import { NewsletterSection } from "@/components/home/newsletter-section";
 import { SocialFeed } from "@/components/home/social-feed";
 import { ProductGridSkeleton } from "@/components/ui/skeletons";
@@ -57,10 +56,7 @@ export default async function HomePage() {
       {/* 9. Testimonials */}
       <Testimonials />
 
-      {/* 10. Why Shilla Lace */}
-      <ValueProps />
-
-      {/* 11. Newsletter */}
+      {/* Newsletter */}
       <NewsletterSection />
 
       {/* 12. Social Feed */}
