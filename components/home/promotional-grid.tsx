@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { gsap, ScrollTrigger } from "@/lib/gsap/config";
@@ -21,15 +21,6 @@ type PromoProduct = {
 };
 
 const curatedProducts: PromoProduct[] = [
-  {
-    key: "sp-1",
-    title: sourcingProducts[0].title,
-    price: sourcingProducts[0].price.sale,
-    compareAt: sourcingProducts[0].price.original,
-    image: sourcingProducts[0].images[0],
-    tag: sourcingProducts[0].tag,
-    unoptimized: true,
-  },
   {
     key: "ex-1",
     title: existingHarnessProducts[0].title,
@@ -84,36 +75,9 @@ const curatedProducts: PromoProduct[] = [
     tag: sourcingProducts[5].tag,
     unoptimized: true,
   },
-  {
-    key: "ex-3",
-    title: existingHarnessProducts[2].title,
-    price: existingHarnessProducts[2].price,
-    image: existingHarnessProducts[2].images[0],
-    href: `/products/${existingHarnessProducts[2].handle}`,
-    tag: existingHarnessProducts[2].tag,
-    unoptimized: true,
-  },
-  {
-    key: "sp-4",
-    title: sourcingProducts[3].title,
-    price: sourcingProducts[3].price.sale,
-    compareAt: sourcingProducts[3].price.original,
-    image: sourcingProducts[3].images[0],
-    tag: sourcingProducts[3].tag,
-    unoptimized: true,
-  },
-  {
-    key: "sp-7",
-    title: sourcingProducts[6].title,
-    price: sourcingProducts[6].price.sale,
-    compareAt: sourcingProducts[6].price.original,
-    image: sourcingProducts[6].images[0],
-    tag: sourcingProducts[6].tag,
-    unoptimized: true,
-  },
 ];
 
-function ScrollProductCard({ product }: { product: PromoProduct }) {
+function ProductCard({ product }: { product: PromoProduct }) {
   const inner = (
     <>
       <div className="relative aspect-[3/4] bg-bg-card overflow-hidden">
@@ -122,7 +86,7 @@ function ScrollProductCard({ product }: { product: PromoProduct }) {
           alt={product.title}
           fill
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
-          sizes="(max-width: 640px) 55vw, (max-width: 1024px) 30vw, 20vw"
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 33vw"
           unoptimized={product.unoptimized}
         />
         <span className="absolute top-2.5 left-2.5 bg-bg/60 backdrop-blur-sm text-cream/70 text-[8px] tracking-[0.15em] uppercase px-2 py-0.5 border border-cream/8">
@@ -159,17 +123,14 @@ function ScrollProductCard({ product }: { product: PromoProduct }) {
 
   if (product.href) {
     return (
-      <Link
-        href={product.href}
-        className="group block flex-shrink-0 w-[52vw] sm:w-[38vw] md:w-[22vw] lg:w-[18vw] snap-start"
-      >
+      <Link href={product.href} className="group block">
         {inner}
       </Link>
     );
   }
 
   return (
-    <div className="group block flex-shrink-0 w-[52vw] sm:w-[38vw] md:w-[22vw] lg:w-[18vw] snap-start cursor-pointer">
+    <div className="group block cursor-pointer">
       {inner}
     </div>
   );
@@ -179,42 +140,8 @@ export function PromotionalGrid() {
   const sectionRef = useRef<HTMLElement>(null);
   const bannerRef = useRef<HTMLDivElement>(null);
   const bannerContentRef = useRef<HTMLDivElement>(null);
-  const scrollHeaderRef = useRef<HTMLDivElement>(null);
-  const scrollTrackRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
-
-  const updateScrollState = () => {
-    const el = scrollTrackRef.current;
-    if (!el) return;
-    setCanScrollLeft(el.scrollLeft > 10);
-    setCanScrollRight(el.scrollLeft < el.scrollWidth - el.clientWidth - 10);
-
-    if (progressRef.current) {
-      const progress = el.scrollLeft / (el.scrollWidth - el.clientWidth);
-      progressRef.current.style.width = `${Math.max(10, progress * 100)}%`;
-    }
-  };
-
-  const scrollBy = (direction: "left" | "right") => {
-    const el = scrollTrackRef.current;
-    if (!el) return;
-    const amount = el.clientWidth * 0.6;
-    el.scrollBy({
-      left: direction === "right" ? amount : -amount,
-      behavior: "smooth",
-    });
-  };
-
-  useEffect(() => {
-    const el = scrollTrackRef.current;
-    if (el) {
-      el.addEventListener("scroll", updateScrollState, { passive: true });
-      updateScrollState();
-      return () => el.removeEventListener("scroll", updateScrollState);
-    }
-  }, []);
+  const gridHeaderRef = useRef<HTMLDivElement>(null);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -250,34 +177,33 @@ export function PromotionalGrid() {
         });
       }
 
-      gsap.from(scrollHeaderRef.current, {
+      gsap.from(gridHeaderRef.current, {
         y: 30,
         opacity: 0,
         duration: 0.9,
         ease: "power3.out",
         scrollTrigger: {
-          trigger: scrollHeaderRef.current,
+          trigger: gridHeaderRef.current,
           start: "top 88%",
           once: true,
         },
       });
 
-      const cards = scrollTrackRef.current?.children;
+      const cards = gridRef.current?.children;
       if (cards) {
         gsap.from(Array.from(cards), {
-          x: 80,
+          y: 40,
           opacity: 0,
           duration: 0.8,
           ease: "power3.out",
-          stagger: 0.06,
+          stagger: 0.08,
           scrollTrigger: {
-            trigger: scrollTrackRef.current,
+            trigger: gridRef.current,
             start: "top 90%",
             once: true,
           },
         });
       }
-
     }, sectionRef);
 
     return () => ctx.revert();
@@ -348,11 +274,11 @@ export function PromotionalGrid() {
         </div>
       </div>
 
-      {/* ── PART 2: Horizontal Product Scroll ── */}
+      {/* ── PART 2: Product Grid ── */}
       <div className="relative py-14 md:py-20 lg:py-24">
         <div className="max-w-[1400px] mx-auto px-5 md:px-10">
           <div
-            ref={scrollHeaderRef}
+            ref={gridHeaderRef}
             className="flex items-end justify-between mb-8 md:mb-10"
           >
             <div>
@@ -363,87 +289,25 @@ export function PromotionalGrid() {
                 Curated Picks
               </h3>
             </div>
-            <div className="hidden md:flex items-center gap-3">
-              <button
-                onClick={() => scrollBy("left")}
-                disabled={!canScrollLeft}
-                className="w-10 h-10 border border-cream/10 flex items-center justify-center text-cream/30 hover:text-cream hover:border-cream/30 disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300"
-                aria-label="Scroll left"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                >
-                  <path d="M19.5 12h-15m0 0l6.75 6.75M4.5 12l6.75-6.75" />
-                </svg>
-              </button>
-              <button
-                onClick={() => scrollBy("right")}
-                disabled={!canScrollRight}
-                className="w-10 h-10 border border-cream/10 flex items-center justify-center text-cream/30 hover:text-cream hover:border-cream/30 disabled:opacity-20 disabled:cursor-not-allowed transition-all duration-300"
-                aria-label="Scroll right"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                >
-                  <path d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                </svg>
-              </button>
-            </div>
+            <Link
+              href="/collections/lingerie-new"
+              className="group inline-flex items-center gap-3 text-[10px] tracking-[0.25em] uppercase text-cream/40 hover:text-cream transition-colors duration-500"
+            >
+              View All
+              <span className="block w-5 h-px bg-current transition-all duration-400 group-hover:w-8" />
+            </Link>
           </div>
-        </div>
 
-        <div
-          ref={scrollTrackRef}
-          className="flex gap-3 md:gap-4 overflow-x-auto hide-scrollbar pb-4 snap-x snap-mandatory pl-5 md:pl-[max(1.25rem,calc((100vw-1400px)/2+2.5rem))]"
-          onScroll={updateScrollState}
-        >
-          {curatedProducts.map((product) => (
-            <ScrollProductCard key={product.key} product={product} />
-          ))}
-          <Link
-            href="/collections/lingerie-new"
-            className="flex-shrink-0 w-[52vw] sm:w-[38vw] md:w-[22vw] lg:w-[18vw] snap-start flex items-center justify-center aspect-[3/4] bg-bg-card border border-cream/5 hover:border-accent/20 transition-all duration-500 group"
+          <div
+            ref={gridRef}
+            className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5"
           >
-            <div className="text-center">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full border border-cream/10 flex items-center justify-center group-hover:border-accent/40 group-hover:bg-accent/5 transition-all duration-500">
-                <svg
-                  className="w-5 h-5 text-cream/30 group-hover:text-cream transition-colors duration-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={1.5}
-                >
-                  <path d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-                </svg>
-              </div>
-              <span className="text-[10px] tracking-[0.25em] uppercase text-cream/30 group-hover:text-cream/60 transition-colors duration-500">
-                View All
-              </span>
-            </div>
-          </Link>
-          <div className="flex-shrink-0 w-5 md:w-10" aria-hidden />
-        </div>
-
-        {/* Progress bar */}
-        <div className="max-w-[1400px] mx-auto px-5 md:px-10 mt-6">
-          <div className="h-px bg-cream/8 relative overflow-hidden">
-            <div
-              ref={progressRef}
-              className="absolute inset-y-0 left-0 bg-accent/50 transition-[width] duration-200"
-              style={{ width: "10%" }}
-            />
+            {curatedProducts.map((product) => (
+              <ProductCard key={product.key} product={product} />
+            ))}
           </div>
         </div>
       </div>
-
     </section>
   );
 }
