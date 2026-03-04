@@ -175,69 +175,12 @@ function ScrollProductCard({ product }: { product: PromoProduct }) {
   );
 }
 
-function MasonryCard({
-  image,
-  title,
-  subtitle,
-  href,
-  className = "",
-}: {
-  image: string;
-  title: string;
-  subtitle: string;
-  href: string;
-  className?: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className={`group relative overflow-hidden block ${className}`}
-    >
-      <Image
-        src={image}
-        alt={title}
-        fill
-        className="object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-110"
-        sizes="(max-width: 768px) 100vw, 50vw"
-        quality={80}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent group-hover:from-black/80 transition-all duration-700" />
-      <div className="absolute inset-0 border border-cream/0 group-hover:border-cream/10 transition-colors duration-500" />
-      <div className="grain-overlay absolute inset-0 pointer-events-none" />
-
-      <div className="absolute bottom-0 inset-x-0 p-5 md:p-7">
-        <p className="text-[9px] tracking-[0.3em] uppercase text-accent-light mb-2">
-          {subtitle}
-        </p>
-        <h3 className="font-heading text-xl md:text-2xl lg:text-3xl text-cream font-light leading-tight mb-3">
-          {title}
-        </h3>
-        <div className="flex items-center gap-2 text-cream/30 group-hover:text-cream/70 transition-colors duration-500">
-          <span className="text-[9px] tracking-[0.25em] uppercase">
-            Explore
-          </span>
-          <svg
-            className="w-3 h-3 translate-x-0 group-hover:translate-x-1.5 transition-transform duration-400"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-            strokeWidth={1.5}
-          >
-            <path d="M4.5 12h15m0 0l-6.75-6.75M19.5 12l-6.75 6.75" />
-          </svg>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
 export function PromotionalGrid() {
   const sectionRef = useRef<HTMLElement>(null);
   const bannerRef = useRef<HTMLDivElement>(null);
   const bannerContentRef = useRef<HTMLDivElement>(null);
   const scrollHeaderRef = useRef<HTMLDivElement>(null);
   const scrollTrackRef = useRef<HTMLDivElement>(null);
-  const masonryRef = useRef<HTMLDivElement>(null);
   const progressRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
@@ -335,21 +278,6 @@ export function PromotionalGrid() {
         });
       }
 
-      const masonryCards = masonryRef.current?.children;
-      if (masonryCards) {
-        gsap.from(Array.from(masonryCards), {
-          y: 60,
-          opacity: 0,
-          duration: 0.9,
-          ease: "power3.out",
-          stagger: 0.15,
-          scrollTrigger: {
-            trigger: masonryRef.current,
-            start: "top 85%",
-            once: true,
-          },
-        });
-      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -516,53 +444,6 @@ export function PromotionalGrid() {
         </div>
       </div>
 
-      {/* ── PART 3: Asymmetric Editorial Grid ── */}
-      <div className="pb-16 md:pb-24 lg:pb-32">
-        <div className="max-w-[1400px] mx-auto px-5 md:px-10">
-          <div className="text-center mb-10 md:mb-14">
-            <p className="text-[10px] md:text-xs tracking-[0.3em] uppercase text-accent-light mb-2">
-              Editorial
-            </p>
-            <h3 className="text-2xl md:text-3xl lg:text-4xl font-heading font-light text-cream italic">
-              Discover the Collections
-            </h3>
-          </div>
-
-          <div
-            ref={masonryRef}
-            className="grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-3.5"
-          >
-            <MasonryCard
-              image="/Upscaled/upscalemedia-transformed (5).png"
-              title="The Red Edit"
-              subtitle="Lace & Desire"
-              href="/collections/lingerie-new"
-              className="md:col-span-7 aspect-[16/10] md:aspect-[16/11]"
-            />
-            <MasonryCard
-              image="/Upscaled/upscalemedia-transformed (6).png"
-              title="After Dark"
-              subtitle="Harness Collection"
-              href="/collections/harness"
-              className="md:col-span-5 aspect-[16/10] md:aspect-[16/11]"
-            />
-            <MasonryCard
-              image="/Upscaled/upscalemedia-transformed (1).png"
-              title="Boudoir Nights"
-              subtitle="Bodysuits & More"
-              href="/collections/bodysuits"
-              className="md:col-span-5 aspect-[16/10] md:aspect-[16/11]"
-            />
-            <MasonryCard
-              image="/Upscaled/upscalemedia-transformed (2).png"
-              title="Candlelit Intimates"
-              subtitle="Premium Sets"
-              href="/collections/lingerie"
-              className="md:col-span-7 aspect-[16/10] md:aspect-[16/11]"
-            />
-          </div>
-        </div>
-      </div>
     </section>
   );
 }

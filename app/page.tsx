@@ -3,11 +3,7 @@ import { getCollectionProducts } from "@/lib/shopify";
 import { HeroSection } from "@/components/home/hero-section";
 import { TrustBar } from "@/components/home/trust-bar";
 import { FeaturedProducts } from "@/components/home/featured-products";
-import { EditorialStrip } from "@/components/home/editorial-strip";
-import { CategoryGrid } from "@/components/home/category-grid";
-import { ParallaxCTA } from "@/components/home/parallax-cta";
 import { PromotionalGrid } from "@/components/home/promotional-grid";
-import { IntimateCollection } from "@/components/home/intimate-collection";
 import { BrandStory } from "@/components/home/brand-story";
 import { Testimonials } from "@/components/home/testimonials";
 import { ValueProps } from "@/components/home/value-props";
@@ -55,19 +51,7 @@ export default async function HomePage() {
       {/* 4. Promotional Grid — Banner + Curated Scroll + Editorial */}
       <PromotionalGrid />
 
-      {/* 5. Editorial Lookbook Strip */}
-      <EditorialStrip />
-
-      {/* 6. Shop by Category */}
-      <CategoryGrid />
-
-      {/* 7. Full-Width Parallax CTA */}
-      <ParallaxCTA />
-
-      {/* 8. The Intimate Edit Collection (Mock/Sourcing) */}
-      <IntimateCollection />
-
-      {/* 8. Brand Story */}
+      {/* 5. Brand Story */}
       <BrandStory />
 
       {/* 9. Testimonials */}
