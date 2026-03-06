@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
+      {
+        protocol: "https",
+        hostname: "ae01.alicdn.com",
+        pathname: "/**",
+      },
     ],
   },
 };

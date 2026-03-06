@@ -5,14 +5,22 @@ import Image from "next/image";
 import { gsap } from "@/lib/gsap/config";
 import { sourcingProducts, existingHarnessProducts, type SourcingProduct, type ExistingHarnessProduct } from "@/lib/sourcing-products";
 
-export function SourcingGrid() {
+type SourcingGridProps = {
+  /** When provided, use this list instead of the default sourcing products (e.g. dev collection). */
+  products?: SourcingProduct[];
+};
+
+export function SourcingGrid({ products }: SourcingGridProps) {
+  const list = products ?? sourcingProducts;
   const [active, setActive] = useState<SourcingProduct | null>(null);
   const [lightboxImg, setLightboxImg] = useState<string>("");
   const sectionRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
 
   const openLightbox = useCallback((product: SourcingProduct) => {
-    setLightboxImg(product.images[0]);
+    const valid = product.images.filter(isValidImg);
+    const initial = valid[1] ?? valid[0] ?? "";
+    setLightboxImg(initial);
     setActive(product);
   }, []);
 
@@ -63,7 +71,7 @@ export function SourcingGrid() {
           ref={gridRef}
           className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-px"
         >
-          {sourcingProducts.map((product, i) => (
+          {list.map((product, i) => (
             <SourcingCard
               key={product.id}
               product={product}
@@ -93,8 +101,20 @@ type CardProps = {
   onOpen: (p: SourcingProduct) => void;
 };
 
+const PREVIEW_IMAGE_INDEX = 1; // use second image as card preview
+
+function isValidImg(src: unknown): src is string {
+  return typeof src === "string" && src.length > 0;
+}
+
 function SourcingCard({ product, priority, onOpen }: CardProps) {
-  const [hoverImg, setHoverImg] = useState(product.images[0]);
+  const validImages = product.images.filter(isValidImg);
+  const previewIndex = validImages.length > PREVIEW_IMAGE_INDEX ? PREVIEW_IMAGE_INDEX : 0;
+  const previewImg = validImages[previewIndex] ?? null;
+  const [hoverImg, setHoverImg] = useState<string | null>(previewImg);
+  const thumbnails = validImages.filter((_, i) => i !== previewIndex);
+
+  const displayImg = hoverImg ?? previewImg;
 
   return (
     <article
@@ -103,29 +123,35 @@ function SourcingCard({ product, priority, onOpen }: CardProps) {
     >
       {/* Image */}
       <div className="relative aspect-[3/4] overflow-hidden bg-surface">
-        <Image
-          src={hoverImg}
-          alt={product.title}
-          fill
-          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-          priority={priority}
-          unoptimized
-        />
+        {displayImg ? (
+          <Image
+            src={displayImg}
+            alt={product.title}
+            fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+            className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            priority={priority}
+            unoptimized
+          />
+        ) : (
+          <div className="absolute inset-0 flex items-center justify-center text-cream/30 text-xs tracking-widest uppercase">
+            No image
+          </div>
+        )}
 
         {/* Gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
         {/* Thumbnail strip */}
         <div className="absolute inset-x-0 bottom-0 flex gap-px p-px bg-bg/60 backdrop-blur-sm translate-y-full group-hover:translate-y-0 transition-transform duration-400 ease-out">
-          {product.images.slice(1).map((img, ti) => (
+          {thumbnails.map((img, ti) => (
             <button
               key={ti}
               className="flex-1 aspect-square overflow-hidden opacity-60 hover:opacity-100 transition-opacity duration-200"
               onMouseEnter={() => setHoverImg(img)}
-              onMouseLeave={() => setHoverImg(product.images[0])}
+              onMouseLeave={() => setHoverImg(previewImg)}
               onClick={(e) => { e.stopPropagation(); setHoverImg(img); onOpen({ ...product, images: [img, ...product.images.filter(x => x !== img)] }); }}
-              aria-label={`View image ${ti + 2}`}
+              aria-label={`View image ${ti + 1}`}
             >
               <Image
                 src={img}
@@ -506,15 +532,21 @@ function Lightbox({ product, currentImg, onImgChange, onClose }: LightboxProps) 
       >
         {/* Main image */}
         <div className="relative aspect-[3/4] bg-surface overflow-hidden">
-          <Image
-            src={currentImg}
-            alt={product.title}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 55vw"
-            unoptimized
-            priority
-          />
+          {currentImg && isValidImg(currentImg) ? (
+            <Image
+              src={currentImg}
+              alt={product.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 55vw"
+              unoptimized
+              priority
+            />
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center text-cream/30 text-sm uppercase tracking-widest">
+              No image
+            </div>
+          )}
         </div>
 
         {/* Details */}
@@ -535,7 +567,7 @@ function Lightbox({ product, currentImg, onImgChange, onClose }: LightboxProps) 
 
           {/* Thumbnail row */}
           <div className="flex gap-1.5 flex-wrap">
-            {product.images.map((img, i) => (
+            {product.images.filter(isValidImg).map((img, i) => (
               <button
                 key={i}
                 onClick={() => onImgChange(img)}
