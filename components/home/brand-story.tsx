@@ -19,6 +19,7 @@ export function BrandStory() {
     const isMobile = window.innerWidth < 768;
 
     const ctx = gsap.context(() => {
+      gsap.set(imageRef.current, { opacity: 1, y: 0 });
       gsap.from(imageRef.current, {
         y: isMobile ? 20 : 60,
         opacity: 0,
@@ -26,13 +27,14 @@ export function BrandStory() {
         ease: "power3.out",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: isMobile ? "top 98%" : "top 80%",
+          start: isMobile ? "top 98%" : "top 90%",
           once: true,
         },
       });
 
       const textElements = textRef.current?.children;
       if (textElements) {
+        gsap.set(Array.from(textElements), { opacity: 1, y: 0 });
         gsap.from(Array.from(textElements), {
           y: isMobile ? 15 : 40,
           opacity: 0,
@@ -40,8 +42,8 @@ export function BrandStory() {
           ease: "power3.out",
           stagger: isMobile ? 0.06 : 0.12,
           scrollTrigger: {
-            trigger: textRef.current,
-            start: isMobile ? "top 98%" : "top 85%",
+            trigger: sectionRef.current,
+            start: isMobile ? "top 98%" : "top 90%",
             once: true,
           },
         });

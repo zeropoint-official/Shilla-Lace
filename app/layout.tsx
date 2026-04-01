@@ -30,6 +30,10 @@ export const metadata: Metadata = {
   description:
     "Redefining intimacy with luxurious lingerie. Celebrating confidence and embracing individuality.",
   metadataBase: new URL(process.env.SITE_URL || "https://shillalace.com"),
+  icons: {
+    icon: "/Favicon.png",
+    apple: "/Favicon.png",
+  },
   robots: {
     index: false,
     follow: false,

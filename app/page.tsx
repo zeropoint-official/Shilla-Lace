@@ -2,16 +2,18 @@ import { Suspense } from "react";
 import { getCollectionProducts } from "@/lib/shopify";
 import { HeroSection } from "@/components/home/hero-section";
 import { TrustBar } from "@/components/home/trust-bar";
-import { FeaturedProducts } from "@/components/home/featured-products";
-import { PromotionalGrid } from "@/components/home/promotional-grid";
+import { CollectionRow } from "@/components/home/collection-row";
+import { CollectionGrid } from "@/components/home/collection-duo";
+
+import { ParallaxCTA } from "@/components/home/parallax-cta";
 import { BrandStory } from "@/components/home/brand-story";
-import { Testimonials } from "@/components/home/testimonials";
+import { BrandEssence } from "@/components/home/brand-essence";
 import { NewsletterSection } from "@/components/home/newsletter-section";
 import { ProductGridSkeleton } from "@/components/ui/skeletons";
 
 export const dynamic = "force-dynamic";
 
-async function BestsellersLoader() {
+async function BestsellersRow() {
   try {
     const products = await getCollectionProducts({
       collection: "lingerie-new",
@@ -19,15 +21,92 @@ async function BestsellersLoader() {
     });
     if (!products.length) return null;
     return (
-      <FeaturedProducts
+      <CollectionRow
         products={products.slice(0, 8)}
         title="Bestsellers"
-        subtitle="Most loved"
-        collectionHref="/collections/lingerie-new"
+        subtitle="Most Loved"
+        href="/collections/lingerie-new"
       />
     );
-  } catch (e) {
-    console.error("Failed to load bestsellers:", e);
+  } catch {
+    return null;
+  }
+}
+
+async function LingerieRow() {
+  try {
+    const products = await getCollectionProducts({
+      collection: "lingerie",
+      sortKey: "BEST_SELLING",
+    });
+    if (!products.length) return null;
+    return (
+      <CollectionRow
+        products={products.slice(0, 8)}
+        title="Lingerie"
+        subtitle="The Collection"
+        href="/collections/lingerie"
+      />
+    );
+  } catch {
+    return null;
+  }
+}
+
+async function BodysuitsRow() {
+  try {
+    const products = await getCollectionProducts({
+      collection: "bodysuits",
+      sortKey: "BEST_SELLING",
+    });
+    if (!products.length) return null;
+    return (
+      <CollectionRow
+        products={products.slice(0, 8)}
+        title="Bodysuits"
+        subtitle="Bold & Sculpted"
+        href="/collections/bodysuits"
+      />
+    );
+  } catch {
+    return null;
+  }
+}
+
+async function DaringRow() {
+  try {
+    const products = await getCollectionProducts({
+      collection: "daring",
+    });
+    if (!products.length) return null;
+    return (
+      <CollectionRow
+        products={products.slice(0, 8)}
+        title="Daring"
+        subtitle="The Collection"
+        href="/collections/daring"
+      />
+    );
+  } catch {
+    return null;
+  }
+}
+
+async function NewInRow() {
+  try {
+    const products = await getCollectionProducts({
+      collection: "new-in",
+    });
+    if (!products.length) return null;
+    return (
+      <CollectionRow
+        products={products.slice(0, 8)}
+        title="New In"
+        subtitle="Just Arrived"
+        href="/collections/new-in"
+      />
+    );
+  } catch {
     return null;
   }
 }
@@ -35,27 +114,41 @@ async function BestsellersLoader() {
 export default async function HomePage() {
   return (
     <>
-      {/* 1. Hero */}
       <HeroSection />
-
-      {/* 2. Trust / Promo Bar */}
       <TrustBar />
 
-      {/* 3. Bestsellers Collection (Shopify) */}
+      {/* 1. Collection cards */}
+      <CollectionGrid />
+
+      {/* 2. Bestsellers */}
       <Suspense fallback={<ProductGridSkeleton />}>
-        <BestsellersLoader />
+        <BestsellersRow />
       </Suspense>
 
-      {/* 4. Promotional Grid — Banner + Curated Scroll + Editorial */}
-      <PromotionalGrid />
+      {/* 3. Daring collection row */}
+      <Suspense fallback={<ProductGridSkeleton />}>
+        <DaringRow />
+      </Suspense>
 
-      {/* 5. Brand Story */}
+      {/* 4. New In collection row */}
+      <Suspense fallback={<ProductGridSkeleton />}>
+        <NewInRow />
+      </Suspense>
+
+      {/* 5. Lingerie collection row */}
+      <Suspense fallback={<ProductGridSkeleton />}>
+        <LingerieRow />
+      </Suspense>
+
+      {/* 6. Bodysuits collection row */}
+      <Suspense fallback={<ProductGridSkeleton />}>
+        <BodysuitsRow />
+      </Suspense>
+
+      {/* Branding sections */}
+      <ParallaxCTA />
       <BrandStory />
-
-      {/* 9. Testimonials */}
-      <Testimonials />
-
-      {/* Newsletter */}
+      <BrandEssence />
       <NewsletterSection />
     </>
   );

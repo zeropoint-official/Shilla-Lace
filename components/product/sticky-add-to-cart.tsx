@@ -99,7 +99,7 @@ export function StickyAddToCart({ product, selectedVariant, onCartAdd }: Props) 
         <button
           onClick={handleAdd}
           disabled={!selectedVariant?.availableForSale || isAdding}
-          className="bg-accent text-cream px-5 py-3 text-[11px] tracking-[0.2em] uppercase font-medium hover:bg-accent-light transition-colors disabled:opacity-40 shrink-0"
+          className="bg-accent text-white px-5 py-3 text-[11px] tracking-[0.2em] uppercase font-medium hover:bg-accent-light transition-colors disabled:opacity-40 shrink-0"
         >
           {isAdding ? "..." : "Add"}
         </button>

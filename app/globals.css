@@ -2,18 +2,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg: #0C0A09;
-  --color-bg-elevated: #141211;
-  --color-bg-card: #1A1816;
-  --color-surface: #221F1D;
+  --color-bg: #FAFAF8;
+  --color-bg-elevated: #FFFFFF;
+  --color-bg-card: #FFFFFF;
+  --color-surface: #F0EDEA;
 
   --color-accent: #800000;
-  --color-accent-light: #A02020;
-  --color-accent-glow: #B03030;
+  --color-accent-light: #9A1818;
+  --color-accent-glow: #800000;
 
-  --color-cream: #F5F0EB;
-  --color-cream-muted: #C8BFB5;
-  --color-muted: #7A7067;
+  --color-cream: #1A1A1A;
+  --color-cream-muted: #6B6B6B;
+  --color-muted: #9B9B9B;
 
   --color-white: #FFFFFF;
   --color-black: #000000;
@@ -32,8 +32,8 @@ body {
 }
 
 ::selection {
-  background: rgba(128, 0, 0, 0.4);
-  color: #F5F0EB;
+  background: rgba(128, 0, 0, 0.18);
+  color: #1A1A1A;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -69,6 +69,22 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: translateX(100%); }
 }
 
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(1.02); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes scrollPulse {
+  0% { transform: translateY(-100%); opacity: 0; }
+  40% { opacity: 1; }
+  100% { transform: translateY(300%); opacity: 0; }
+}
+
 @keyframes grain {
   0%, 100% { transform: translate(0, 0); }
   10% { transform: translate(-5%, -10%); }
@@ -80,16 +96,6 @@ h1, h2, h3, h4, h5, h6 {
   70% { transform: translate(0%, 15%); }
   80% { transform: translate(3%, 35%); }
   90% { transform: translate(-10%, 10%); }
-}
-
-@keyframes pulse-glow {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 0.8; }
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
 }
 
 .grain-overlay::before {

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getCollections } from "@/lib/shopify";
+import { CollectionGrid } from "@/components/home/collection-duo";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -74,6 +75,8 @@ export default async function CollectionsPage() {
           ))}
         </div>
       </div>
+
+      <CollectionGrid />
     </div>
   );
 }

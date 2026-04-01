@@ -49,22 +49,22 @@ export function SearchModal({ open, onClose }: Props) {
         open ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
     >
-      <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
+      <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" onClick={onClose} />
       <div className="relative max-w-2xl mx-auto mt-24 md:mt-32 px-5">
         <form onSubmit={handleSubmit} className="relative">
-          <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-cream/30" />
+          <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-muted" />
           <input
             ref={inputRef}
             type="text"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search for lingerie, bodysuits..."
-            className="w-full bg-bg-elevated border border-cream/10 py-4 pl-12 pr-12 text-sm text-cream placeholder:text-cream/25 focus:outline-none focus:border-accent/40 tracking-wide font-body transition-colors"
+            className="w-full bg-white border border-black/[0.08] py-4 pl-12 pr-12 text-sm text-cream placeholder:text-muted focus:outline-none focus:border-accent-glow/40 tracking-wide font-body transition-colors shadow-lg"
           />
           <button
             type="button"
             onClick={onClose}
-            className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-cream/30 hover:text-cream transition-colors"
+            className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-muted hover:text-cream transition-colors"
             aria-label="Close search"
           >
             <XIcon className="w-4 h-4" />

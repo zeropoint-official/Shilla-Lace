@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 const announcements = [
   "Buy 2, Get 1 Free — Sitewide",
-  "Free Shipping Worldwide",
+  "Complimentary Shipping Worldwide",
   "10% Off Your First Order — Subscribe Now",
 ];
 
@@ -19,7 +19,7 @@ export function AnnouncementBar() {
   }, []);
 
   return (
-    <div className="bg-accent text-cream/90 text-center py-2 px-4 text-[10px] md:text-[11px] tracking-[0.3em] uppercase relative overflow-hidden">
+    <div className="bg-surface text-accent/80 text-center py-2 px-4 text-[10px] md:text-[11px] tracking-[0.3em] uppercase relative overflow-hidden">
       <div className="relative h-4">
         {announcements.map((text, i) => (
           <span

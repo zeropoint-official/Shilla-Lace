@@ -1,12 +1,9 @@
-import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getProduct, getProductRecommendations } from "@/lib/shopify";
 import { ProductPageClient } from "@/components/product/product-page-client";
 import { BenefitsBar } from "@/components/product/benefits-bar";
-import { WhyShillaLace } from "@/components/product/why-shilla-lace";
 import { RecommendedProducts } from "@/components/product/recommended-products";
-import { ProductGridSkeleton } from "@/components/ui/skeletons";
 import { ProductJsonLd } from "@/components/seo/product-jsonld";
 
 export const revalidate = 60;
@@ -42,31 +39,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-async function Recommendations({ productId }: { productId: string }) {
-  const products = await getProductRecommendations(productId);
-  if (!products.length) return null;
-  return <RecommendedProducts products={products.slice(0, 8)} />;
-}
-
 export default async function ProductPage({ params }: Props) {
   const { handle } = await params;
   const product = await getProduct(handle);
 
   if (!product) notFound();
 
+  const recommendations = await getProductRecommendations(product.id);
+  const completeTheLook = recommendations.slice(0, 3);
+  const moreProducts = recommendations.slice(3, 11);
+
   return (
     <>
       <ProductJsonLd product={product} />
 
-      <ProductPageClient product={product} />
+      <ProductPageClient product={product} completeTheLook={completeTheLook} />
 
       <BenefitsBar />
 
-      <WhyShillaLace />
-
-      <Suspense fallback={<ProductGridSkeleton count={4} />}>
-        <Recommendations productId={product.id} />
-      </Suspense>
+      {moreProducts.length > 0 && (
+        <RecommendedProducts products={moreProducts} />
+      )}
     </>
   );
 }

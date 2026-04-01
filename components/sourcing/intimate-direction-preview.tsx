@@ -215,7 +215,7 @@ function HeroSection() {
           <div ref={ctaRef} className="flex flex-col sm:flex-row gap-3">
             <Link
               href="/collections/harness"
-              className="group relative inline-flex items-center justify-center h-13 px-10 bg-accent text-cream text-[11px] tracking-[0.25em] uppercase overflow-hidden transition-all duration-500 hover:bg-accent-light"
+              className="group relative inline-flex items-center justify-center h-13 px-10 bg-accent text-white text-[11px] tracking-[0.25em] uppercase overflow-hidden transition-all duration-500 hover:bg-accent-light"
             >
               <span className="relative z-10">Shop the Collection</span>
             </Link>
@@ -523,7 +523,7 @@ function ProductCard({
           unoptimized={product.unoptimized}
         />
         {product.compareAt && (
-          <span className="absolute top-2.5 left-2.5 md:top-3 md:left-3 bg-accent text-cream text-[9px] md:text-[10px] tracking-[0.12em] uppercase px-2 py-1">
+          <span className="absolute top-2.5 left-2.5 md:top-3 md:left-3 bg-accent text-white text-[9px] md:text-[10px] tracking-[0.12em] uppercase px-2 py-1">
             Sale
           </span>
         )}
@@ -633,7 +633,7 @@ function BrandStatement() {
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Link
             href="/collections/lingerie-new"
-            className="inline-flex items-center justify-center h-13 px-10 bg-accent text-cream text-[11px] tracking-[0.25em] uppercase transition-all duration-500 hover:bg-accent-light"
+            className="inline-flex items-center justify-center h-13 px-10 bg-accent text-white text-[11px] tracking-[0.25em] uppercase transition-all duration-500 hover:bg-accent-light"
           >
             Shop All Lingerie
           </Link>

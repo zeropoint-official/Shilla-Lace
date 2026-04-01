@@ -11,13 +11,15 @@ import { gsap } from "@/lib/gsap/config";
 import { ChevronDownIcon } from "@/components/ui/icons";
 import { SizeGuideModal } from "./size-guide-modal";
 import { StickyAddToCart } from "./sticky-add-to-cart";
+import { CompleteTheLook } from "./complete-the-look";
 
 type Props = {
   product: Product;
+  completeTheLook: Product[];
   onCartAdd?: () => void;
 };
 
-export function ProductDetail({ product, onCartAdd }: Props) {
+export function ProductDetail({ product, completeTheLook, onCartAdd }: Props) {
   const { addCartItem } = useCart();
   const [selectedOptions, setSelectedOptions] = useState<
     Record<string, string>
@@ -273,7 +275,7 @@ export function ProductDetail({ product, onCartAdd }: Props) {
                   />
                 )}
                 {isOnSale && (
-                  <span className="absolute top-3 left-3 md:top-4 md:left-4 bg-accent text-cream text-[10px] md:text-[11px] tracking-[0.12em] uppercase px-2.5 py-1 z-10">
+                  <span className="absolute top-3 left-3 md:top-4 md:left-4 bg-accent text-white text-[10px] md:text-[11px] tracking-[0.12em] uppercase px-2.5 py-1 z-10">
                     -{discount}%
                   </span>
                 )}
@@ -428,7 +430,7 @@ export function ProductDetail({ product, onCartAdd }: Props) {
                             disabled={!isAvailable}
                             className={`min-w-[48px] px-4 py-2.5 text-[11px] md:text-xs border transition-all ${
                               isSelected
-                                ? "bg-cream text-bg border-cream font-medium"
+                                ? "bg-accent text-white border-accent font-medium"
                                 : isAvailable
                                   ? "border-cream/25 text-cream/80 hover:border-cream/50 hover:text-cream"
                                   : "border-cream/10 text-cream/25 cursor-not-allowed line-through"
@@ -506,8 +508,8 @@ export function ProductDetail({ product, onCartAdd }: Props) {
                 disabled={!selectedVariant?.availableForSale || isAdding}
                 className={`w-full py-4 text-xs tracking-[0.25em] uppercase font-medium transition-all duration-500 disabled:opacity-40 disabled:cursor-not-allowed ${
                   addedToCart
-                    ? "bg-[#5C4033] text-cream"
-                    : "bg-accent text-cream hover:bg-accent-light active:scale-[0.98]"
+                    ? "bg-[#5C4033] text-white"
+                    : "bg-accent text-white hover:bg-accent-light active:scale-[0.98]"
                 }`}
               >
                 {!selectedVariant?.availableForSale
@@ -529,6 +531,33 @@ export function ProductDetail({ product, onCartAdd }: Props) {
               >
                 {isBuyingNow ? "Redirecting..." : "Buy It Now"}
               </button>
+
+              {/* Reassurance strip */}
+              <div className="mt-5 flex gap-3">
+                <div className="flex-1 flex items-center gap-2.5 bg-cream/[0.03] border border-cream/8 px-3 py-3 md:px-4 md:py-3.5 md:items-start md:gap-3">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.2} className="w-4 h-4 md:w-5 md:h-5 text-accent-light shrink-0 md:mt-0.5">
+                    <path d="M21 11.25v8.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 1 0 9.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1 1 14.625 7.5H12m0 0V21m-8.25-9.75h16.5" />
+                  </svg>
+                  <div>
+                    <p className="text-[10px] md:text-[11px] tracking-[0.12em] uppercase text-cream/80 font-medium">Discreet Packaging</p>
+                    <p className="hidden md:block text-[11px] text-cream/40 leading-relaxed mt-0.5">Plain, unmarked box — your privacy is our priority.</p>
+                  </div>
+                </div>
+                <div className="flex-1 flex items-center gap-2.5 bg-cream/[0.03] border border-cream/8 px-3 py-3 md:px-4 md:py-3.5 md:items-start md:gap-3">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.2} className="w-4 h-4 md:w-5 md:h-5 text-accent-light shrink-0 md:mt-0.5">
+                    <path d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3" />
+                  </svg>
+                  <div>
+                    <p className="text-[10px] md:text-[11px] tracking-[0.12em] uppercase text-cream/80 font-medium">14-Day Returns</p>
+                    <p className="hidden md:block text-[11px] text-cream/40 leading-relaxed mt-0.5">Easy, hassle-free returns within 14 days of delivery.</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Complete the Look */}
+              {completeTheLook.length > 0 && (
+                <CompleteTheLook products={completeTheLook} onCartAdd={onCartAdd} />
+              )}
 
               {/* Trust badges */}
               <div className="flex items-center justify-center gap-6 mt-6 pt-5 border-t border-cream/8">
@@ -562,7 +591,7 @@ export function ProductDetail({ product, onCartAdd }: Props) {
 
               {/* Accordion details */}
               <div className="mt-6 space-y-0 border-t border-cream/8">
-                <details className="group border-b border-cream/8" open>
+                <details className="group border-b border-cream/8">
                   <summary className="flex items-center justify-between py-4 cursor-pointer text-[11px] tracking-[0.2em] uppercase text-cream/70 hover:text-cream transition-colors">
                     Description
                     <ChevronDownIcon className="w-3.5 h-3.5 transition-transform group-open:rotate-180" />

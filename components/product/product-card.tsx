@@ -42,7 +42,7 @@ export function ProductCard({ product, priority = false }: Props) {
           />
         )}
         {isOnSale && (
-          <span className="absolute top-2.5 left-2.5 md:top-3 md:left-3 bg-accent text-cream text-[10px] md:text-[11px] tracking-[0.12em] uppercase px-2 py-1">
+          <span className="absolute top-2.5 left-2.5 md:top-3 md:left-3 bg-accent text-white text-[10px] md:text-[11px] tracking-[0.12em] uppercase px-2 py-1">
             -{discount}%
           </span>
         )}

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getCollection, getCollectionProducts } from "@/lib/shopify";
 import { CollectionContent } from "@/components/collection/collection-content";
+import { CollectionGrid } from "@/components/home/collection-duo";
 import { CollectionJsonLd } from "@/components/seo/collection-jsonld";
 
 export const revalidate = 300;
@@ -50,6 +51,7 @@ export default async function CollectionPage({ params, searchParams }: Props) {
         products={products}
         currentSort={sortKey}
       />
+      <CollectionGrid />
     </>
   );
 }
