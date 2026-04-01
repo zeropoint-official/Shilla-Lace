@@ -11,7 +11,7 @@ import { MobileMenu } from "./mobile-menu";
 import { SearchModal } from "./search-modal";
 
 const navigation = [
-  { title: "New In",      href: "/collections/newin"        },
+  { title: "New In",      href: "/collections/new-in"        },
   { title: "Lingerie",    href: "/collections/lingerie"     },
   { title: "Bodysuits",   href: "/collections/bodysuits"    },
   { title: "Stockings",   href: "/collections/cro-stockings"},

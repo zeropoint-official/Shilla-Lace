@@ -32,11 +32,11 @@ export function MobileMenu({ open, onClose, navigation, infoLinks = [] }: Props)
         onClick={onClose}
       />
       <div
-        className={`fixed top-0 left-0 bottom-0 w-[300px] bg-white z-50 transition-transform duration-500 ease-out ${
+        className={`fixed top-0 left-0 bottom-0 w-[min(300px,85vw)] bg-white z-50 transition-transform duration-500 ease-out flex flex-col ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="flex items-center justify-between p-5 border-b border-black/[0.06]">
+        <div className="flex items-center justify-between p-5 border-b border-black/[0.06] shrink-0">
           <span className="font-heading text-lg tracking-[0.1em] text-cream font-light">
             Menu
           </span>
@@ -48,7 +48,7 @@ export function MobileMenu({ open, onClose, navigation, infoLinks = [] }: Props)
             <XIcon className="w-4 h-4" />
           </button>
         </div>
-        <nav className="p-5">
+        <nav className="p-5 flex-1 overflow-y-auto">
           <ul className="space-y-0">
             {navigation.map((item) => (
               <li key={item.href}>
@@ -86,7 +86,7 @@ export function MobileMenu({ open, onClose, navigation, infoLinks = [] }: Props)
             </>
           )}
         </nav>
-        <div className="absolute bottom-0 left-0 right-0 p-5 border-t border-black/[0.04]">
+        <div className="shrink-0 p-5 border-t border-black/[0.04]">
           <div className="flex gap-6">
             <a
               href="https://www.instagram.com/shillalace/"
