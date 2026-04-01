@@ -11,7 +11,7 @@ import { BrandEssence } from "@/components/home/brand-essence";
 import { NewsletterSection } from "@/components/home/newsletter-section";
 import { ProductGridSkeleton } from "@/components/ui/skeletons";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 async function BestsellersRow() {
   try {

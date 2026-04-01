@@ -17,7 +17,6 @@ type PromoProduct = {
   image: string;
   href?: string;
   tag: string;
-  unoptimized?: boolean;
 };
 
 const curatedProducts: PromoProduct[] = [
@@ -28,7 +27,6 @@ const curatedProducts: PromoProduct[] = [
     image: existingHarnessProducts[0].images[0],
     href: `/products/${existingHarnessProducts[0].handle}`,
     tag: existingHarnessProducts[0].tag,
-    unoptimized: true,
   },
   {
     key: "sp-2",
@@ -37,7 +35,6 @@ const curatedProducts: PromoProduct[] = [
     compareAt: sourcingProducts[1].price.original,
     image: sourcingProducts[1].images[0],
     tag: sourcingProducts[1].tag,
-    unoptimized: true,
   },
   {
     key: "sp-5",
@@ -46,7 +43,6 @@ const curatedProducts: PromoProduct[] = [
     compareAt: sourcingProducts[4].price.original,
     image: sourcingProducts[4].images[0],
     tag: sourcingProducts[4].tag,
-    unoptimized: true,
   },
   {
     key: "ex-2",
@@ -55,7 +51,6 @@ const curatedProducts: PromoProduct[] = [
     image: existingHarnessProducts[1].images[0],
     href: `/products/${existingHarnessProducts[1].handle}`,
     tag: existingHarnessProducts[1].tag,
-    unoptimized: true,
   },
   {
     key: "sp-3",
@@ -64,7 +59,6 @@ const curatedProducts: PromoProduct[] = [
     compareAt: sourcingProducts[2].price.original,
     image: sourcingProducts[2].images[0],
     tag: sourcingProducts[2].tag,
-    unoptimized: true,
   },
   {
     key: "sp-6",
@@ -73,7 +67,6 @@ const curatedProducts: PromoProduct[] = [
     compareAt: sourcingProducts[5].price.original,
     image: sourcingProducts[5].images[0],
     tag: sourcingProducts[5].tag,
-    unoptimized: true,
   },
 ];
 
@@ -89,7 +82,6 @@ function CuratedCard({ product }: { product: PromoProduct }) {
           fill
           className="object-cover transition-transform duration-[1000ms] ease-out group-hover:scale-[1.05]"
           sizes="(max-width: 640px) 50vw, 33vw"
-          unoptimized={product.unoptimized}
         />
         {/* Tag */}
         <span className="absolute top-3 left-3 text-[7px] tracking-[0.18em] uppercase text-cream/55 font-body">

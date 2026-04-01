@@ -1,12 +1,18 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProduct, getProductRecommendations } from "@/lib/shopify";
+import { getProduct, getProductRecommendations, getProducts } from "@/lib/shopify";
 import { ProductPageClient } from "@/components/product/product-page-client";
 import { BenefitsBar } from "@/components/product/benefits-bar";
 import { RecommendedProducts } from "@/components/product/recommended-products";
 import { ProductJsonLd } from "@/components/seo/product-jsonld";
 
 export const revalidate = 60;
+
+export async function generateStaticParams() {
+  const products = await getProducts({});
+  return products.map((product) => ({ handle: product.handle }));
+}
 
 type Props = {
   params: Promise<{ handle: string }>;
@@ -39,6 +45,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
+async function RecommendedSection({ productId }: { productId: string }) {
+  const recommendations = await getProductRecommendations(productId);
+  const moreProducts = recommendations.slice(3, 11);
+  if (moreProducts.length === 0) return null;
+  return <RecommendedProducts products={moreProducts} />;
+}
+
 export default async function ProductPage({ params }: Props) {
   const { handle } = await params;
   const product = await getProduct(handle);
@@ -47,7 +60,6 @@ export default async function ProductPage({ params }: Props) {
 
   const recommendations = await getProductRecommendations(product.id);
   const completeTheLook = recommendations.slice(0, 3);
-  const moreProducts = recommendations.slice(3, 11);
 
   return (
     <>
@@ -57,9 +69,9 @@ export default async function ProductPage({ params }: Props) {
 
       <BenefitsBar />
 
-      {moreProducts.length > 0 && (
-        <RecommendedProducts products={moreProducts} />
-      )}
+      <Suspense>
+        <RecommendedSection productId={product.id} />
+      </Suspense>
     </>
   );
 }

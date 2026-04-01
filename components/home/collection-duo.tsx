@@ -9,25 +9,25 @@ const collections = [
     title: "Lingerie",
     subtitle: "Timeless Elegance",
     href: "/collections/lingerie",
-    image: "/collection/lingerie.png",
+    image: "/Collection/lingerie.png",
   },
   {
     title: "Bodysuits",
     subtitle: "Bold & Sculpted",
     href: "/collections/bodysuits",
-    image: "/collection/bodysuit.png",
+    image: "/Collection/bodysuit.png",
   },
   {
     title: "Stockings",
     subtitle: "Sheer Elegance",
     href: "/collections/cro-stockings",
-    image: "/collection/stocking.png",
+    image: "/Collection/stocking.png",
   },
   {
     title: "Harness",
     subtitle: "Daring & Refined",
     href: "/collections/harness",
-    image: "/collection/harness.png",
+    image: "/Collection/harness.png",
   },
 ];
 

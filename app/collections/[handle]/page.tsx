@@ -1,11 +1,18 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getCollection, getCollectionProducts } from "@/lib/shopify";
+import { getCollection, getCollectionProducts, getCollections } from "@/lib/shopify";
 import { CollectionContent } from "@/components/collection/collection-content";
 import { CollectionGrid } from "@/components/home/collection-duo";
 import { CollectionJsonLd } from "@/components/seo/collection-jsonld";
 
 export const revalidate = 300;
+
+export async function generateStaticParams() {
+  const collections = await getCollections();
+  return collections
+    .filter((c) => c.handle)
+    .map((collection) => ({ handle: collection.handle }));
+}
 
 type Props = {
   params: Promise<{ handle: string }>;

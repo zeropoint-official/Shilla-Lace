@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo, useRef, useEffect, useCallback } from "react";
+import { useState, useMemo, useRef, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Product, ProductVariant } from "@/lib/shopify/types";
@@ -30,24 +30,14 @@ export function ProductDetail({ product, completeTheLook, onCartAdd }: Props) {
     });
     return defaults;
   });
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [isAdding, setIsAdding] = useState(false);
   const [isBuyingNow, setIsBuyingNow] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
   const [showSizeGuide, setShowSizeGuide] = useState(false);
-  const [imageZoom, setImageZoom] = useState(false);
-  const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
-  const [touchStart, setTouchStart] = useState<number | null>(null);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
 
   const infoRef = useRef<HTMLDivElement>(null);
   const galleryRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setIsTouchDevice("ontouchstart" in window || navigator.maxTouchPoints > 0);
-  }, []);
 
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia(
@@ -187,34 +177,6 @@ export function ProductDetail({ product, completeTheLook, onCartAdd }: Props) {
     }
   }
 
-  function handleImageMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    setZoomPosition({ x, y });
-  }
-
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    setTouchStart(e.touches[0].clientX);
-  }, []);
-
-  const handleTouchEnd = useCallback(
-    (e: React.TouchEvent) => {
-      if (touchStart === null) return;
-      const diff = touchStart - e.changedTouches[0].clientX;
-      const threshold = 50;
-      if (Math.abs(diff) > threshold) {
-        if (diff > 0 && selectedImageIndex < product.images.length - 1) {
-          setSelectedImageIndex((p) => p + 1);
-        } else if (diff < 0 && selectedImageIndex > 0) {
-          setSelectedImageIndex((p) => p - 1);
-        }
-      }
-      setTouchStart(null);
-    },
-    [touchStart, selectedImageIndex, product.images.length]
-  );
-
   return (
     <>
       <div className="pt-24 md:pt-28 pb-0">
@@ -240,92 +202,61 @@ export function ProductDetail({ product, completeTheLook, onCartAdd }: Props) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10">
             {/* Image Gallery */}
             <div ref={galleryRef} className="lg:col-span-7">
-              {/* Main image */}
-              <div
-                className={`relative aspect-[3/4] bg-bg-card overflow-hidden ${isTouchDevice ? "cursor-pointer" : "cursor-zoom-in"}`}
-                onMouseEnter={() => { if (!isTouchDevice) setImageZoom(true); }}
-                onMouseLeave={() => { if (!isTouchDevice) setImageZoom(false); }}
-                onMouseMove={(e) => { if (!isTouchDevice) handleImageMouseMove(e); }}
-                onTouchStart={handleTouchStart}
-                onTouchEnd={handleTouchEnd}
-                onClick={() => { if (isTouchDevice) setLightboxOpen(true); }}
-              >
-                {/* Shimmer loading skeleton */}
-                <div className="absolute inset-0 bg-gradient-to-r from-bg-card via-surface to-bg-card animate-pulse" />
-
-                {product.images[selectedImageIndex] && (
-                  <Image
-                    src={product.images[selectedImageIndex].url}
-                    alt={
-                      product.images[selectedImageIndex].altText ||
-                      product.title
-                    }
-                    fill
-                    className="object-cover transition-transform duration-300 relative z-[1]"
-                    style={
-                      imageZoom && !isTouchDevice
-                        ? {
-                            transform: "scale(2)",
-                            transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
-                          }
-                        : undefined
-                    }
-                    sizes="(max-width: 1024px) 100vw, 58vw"
-                    priority
-                  />
-                )}
-                {isOnSale && (
-                  <span className="absolute top-3 left-3 md:top-4 md:left-4 bg-accent text-white text-[10px] md:text-[11px] tracking-[0.12em] uppercase px-2.5 py-1 z-10">
-                    -{discount}%
-                  </span>
-                )}
-
-                {/* Mobile image dots */}
-                {product.images.length > 1 && (
-                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10 lg:hidden bg-black/40 backdrop-blur-sm rounded-full px-3 py-1.5">
-                    {product.images.map((_, i) => (
-                      <button
-                        key={i}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setSelectedImageIndex(i);
-                        }}
-                        className={`rounded-full transition-all ${
-                          i === selectedImageIndex
-                            ? "bg-cream w-5 h-2"
-                            : "bg-cream/50 w-2 h-2"
-                        }`}
-                        aria-label={`View image ${i + 1}`}
-                      />
-                    ))}
+              {/* Mobile: horizontal scroll snap */}
+              <div className="flex gap-2 overflow-x-auto snap-x snap-mandatory hide-scrollbar lg:hidden -mx-5 px-5">
+                {product.images.map((image, i) => (
+                  <div
+                    key={i}
+                    className="relative aspect-[3/4] snap-center shrink-0 w-[85vw] max-w-[500px] bg-bg-card overflow-hidden"
+                  >
+                    <Image
+                      src={image.url}
+                      alt={image.altText || product.title}
+                      fill
+                      className="object-cover"
+                      sizes="85vw"
+                      priority={i === 0}
+                    />
+                    {i === 0 && isOnSale && (
+                      <span className="absolute top-3 left-3 bg-accent text-white text-[10px] tracking-[0.12em] uppercase px-2.5 py-1 z-10">
+                        -{discount}%
+                      </span>
+                    )}
                   </div>
-                )}
+                ))}
               </div>
 
-              {/* Desktop thumbnail strip */}
-              {product.images.length > 1 && (
-                <div className="hidden lg:grid grid-cols-5 gap-3 mt-3">
-                  {product.images.map((image, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setSelectedImageIndex(i)}
-                      className={`relative aspect-square bg-bg-card overflow-hidden border-2 transition-colors ${
-                        i === selectedImageIndex
-                          ? "border-accent"
-                          : "border-transparent hover:border-cream/20"
-                      }`}
-                    >
-                      <Image
-                        src={image.url}
-                        alt={image.altText || `${product.title} ${i + 1}`}
-                        fill
-                        className="object-cover"
-                        sizes="100px"
-                      />
-                    </button>
-                  ))}
-                </div>
-              )}
+              {/* Desktop: vertical stack */}
+              <div className="hidden lg:grid grid-cols-2 gap-3">
+                {product.images.map((image, i) => (
+                  <div
+                    key={i}
+                    className={`relative bg-bg-card overflow-hidden ${
+                      product.images.length % 2 !== 0 && i === 0
+                        ? "col-span-2 aspect-[3/4]"
+                        : "aspect-[3/4]"
+                    }`}
+                  >
+                    <Image
+                      src={image.url}
+                      alt={image.altText || `${product.title} ${i + 1}`}
+                      fill
+                      className="object-cover"
+                      sizes={
+                        product.images.length % 2 !== 0 && i === 0
+                          ? "58vw"
+                          : "29vw"
+                      }
+                      priority={i < 2}
+                    />
+                    {i === 0 && isOnSale && (
+                      <span className="absolute top-3 left-3 md:top-4 md:left-4 bg-accent text-white text-[11px] tracking-[0.12em] uppercase px-2.5 py-1 z-10">
+                        -{discount}%
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
             </div>
 
             {/* Product Info */}
@@ -651,52 +582,6 @@ export function ProductDetail({ product, completeTheLook, onCartAdd }: Props) {
 
       <StickyAddToCart product={product} selectedVariant={selectedVariant} onCartAdd={onCartAdd} />
 
-      {/* Mobile fullscreen lightbox */}
-      {lightboxOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-black flex items-center justify-center"
-          onClick={() => setLightboxOpen(false)}
-        >
-          <button
-            onClick={() => setLightboxOpen(false)}
-            className="absolute top-4 right-4 z-10 p-2 text-cream/50 hover:text-cream"
-            aria-label="Close"
-          >
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-6 h-6">
-              <path d="M6 18 18 6M6 6l12 12" />
-            </svg>
-          </button>
-          {product.images[selectedImageIndex] && (
-            <Image
-              src={product.images[selectedImageIndex].url}
-              alt={product.images[selectedImageIndex].altText || product.title}
-              fill
-              className="object-contain"
-              sizes="100vw"
-              priority
-            />
-          )}
-          {product.images.length > 1 && (
-            <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2.5 z-10 bg-black/50 backdrop-blur-sm rounded-full px-4 py-2">
-              {product.images.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedImageIndex(i);
-                  }}
-                  className={`rounded-full transition-all ${
-                    i === selectedImageIndex
-                      ? "bg-cream w-5 h-2"
-                      : "bg-cream/40 w-2 h-2"
-                  }`}
-                  aria-label={`View image ${i + 1}`}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
     </>
   );
 }

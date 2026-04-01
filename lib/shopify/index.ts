@@ -52,7 +52,7 @@ type ExtractVariables<T> = T extends { variables: object }
   : never;
 
 async function shopifyFetch<T>({
-  cache = "no-store",
+  cache = "force-cache",
   headers,
   query,
   tags,

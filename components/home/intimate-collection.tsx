@@ -14,7 +14,6 @@ type IntimateProduct = {
   image: string;
   href?: string;
   tag: string;
-  unoptimized?: boolean;
 };
 
 const intimateProducts: IntimateProduct[] = [
@@ -34,7 +33,6 @@ const intimateProducts: IntimateProduct[] = [
     compareAt: sourcingProducts[8].price.original,
     image: sourcingProducts[8].images[0],
     tag: sourcingProducts[8].tag,
-    unoptimized: true,
   },
   {
     key: "pd2",
@@ -51,7 +49,6 @@ const intimateProducts: IntimateProduct[] = [
     compareAt: sourcingProducts[10].price.original,
     image: sourcingProducts[10].images[0],
     tag: sourcingProducts[10].tag,
-    unoptimized: true,
   },
   {
     key: "s8",
@@ -60,7 +57,6 @@ const intimateProducts: IntimateProduct[] = [
     compareAt: sourcingProducts[7].price.original,
     image: sourcingProducts[7].images[0],
     tag: sourcingProducts[7].tag,
-    unoptimized: true,
   },
   {
     key: "pc2",
@@ -77,7 +73,6 @@ const intimateProducts: IntimateProduct[] = [
     compareAt: sourcingProducts[9].price.original,
     image: sourcingProducts[9].images[0],
     tag: sourcingProducts[9].tag,
-    unoptimized: true,
   },
   {
     key: "pe5",
@@ -111,7 +106,6 @@ function IntimateProductCard({
           className="object-cover transition-transform duration-[1000ms] ease-out group-hover:scale-[1.04]"
           sizes="(max-width: 768px) 50vw, (max-width: 1280px) 25vw, 20vw"
           priority={priority}
-          unoptimized={product.unoptimized}
         />
 
         {/* Subtle top gradient to ensure badges are readable */}
