@@ -9,13 +9,13 @@ const collections = [
     title: "Lingerie",
     subtitle: "Timeless Elegance",
     href: "/collections/lingerie",
-    image: "/Collection/lingerie.png",
+    image: "/Collection/lingeriev2.png",
   },
   {
     title: "Bodysuits",
     subtitle: "Bold & Sculpted",
     href: "/collections/bodysuits",
-    image: "/Collection/bodysuit.png",
+    image: "/Collection/bodysuitv2.png",
   },
   {
     title: "Stockings",
