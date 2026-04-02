@@ -1,11 +1,12 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const shopLinks = [
   { title: "Lingerie", href: "/collections/lingerie" },
   { title: "Bodysuits", href: "/collections/bodysuits" },
   { title: "Stockings", href: "/collections/cro-stockings" },
-  { title: "Best Sellers", href: "/collections/best-sellers" },
-  { title: "New Arrivals", href: "/collections/lingerie-new" },
+  { title: "Best Sellers", href: "/collections/lingerie-new" },
+  { title: "New Arrivals", href: "/collections/new-in" },
 ];
 
 const infoLinks = [
@@ -60,9 +61,15 @@ export function Footer() {
       <div className="max-w-[1400px] mx-auto px-5 md:px-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12 py-16 md:py-20">
           <div className="lg:col-span-1">
-            <h2 className="font-heading text-xl tracking-[0.15em] text-cream mb-4 font-light">
-              SHILLA LACE
-            </h2>
+            <Link href="/" className="inline-block mb-4">
+              <Image
+                src="/logo.avif"
+                alt="Shilla Lace"
+                width={140}
+                height={40}
+                className="h-10 w-auto"
+              />
+            </Link>
             <p className="text-xs text-cream/40 leading-relaxed max-w-xs">
               Redefining intimacy with luxurious lingerie. Celebrating
               confidence and embracing individuality since 2021.

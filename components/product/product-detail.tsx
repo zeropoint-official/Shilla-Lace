@@ -19,6 +19,33 @@ type Props = {
   onCartAdd?: () => void;
 };
 
+const SIZE_ABBREV: Record<string, string> = {
+  "x-small": "XS", "xsmall": "XS", "extra small": "XS", "xs": "XS",
+  "small": "S", "s": "S",
+  "medium": "M", "m": "M",
+  "large": "L", "l": "L",
+  "x-large": "XL", "xlarge": "XL", "extra large": "XL", "xl": "XL",
+  "xx-large": "XXL", "xxlarge": "XXL", "xxl": "XXL",
+  "2xl": "XXL", "2x": "XXL",
+};
+
+const SIZE_ORDER = ["XS", "S", "M", "L", "XL", "XXL"];
+
+function normalizeSizeLabel(value: string): string {
+  return SIZE_ABBREV[value.toLowerCase().trim()] ?? value;
+}
+
+function sortSizeValues(values: string[]): string[] {
+  return [...values].sort((a, b) => {
+    const ai = SIZE_ORDER.indexOf(normalizeSizeLabel(a));
+    const bi = SIZE_ORDER.indexOf(normalizeSizeLabel(b));
+    if (ai === -1 && bi === -1) return 0;
+    if (ai === -1) return 1;
+    if (bi === -1) return -1;
+    return ai - bi;
+  });
+}
+
 export function ProductDetail({ product, completeTheLook, onCartAdd }: Props) {
   const { addCartItem } = useCart();
   const [selectedOptions, setSelectedOptions] = useState<
@@ -328,7 +355,9 @@ export function ProductDetail({ product, completeTheLook, onCartAdd }: Props) {
                       <label className="text-[11px] tracking-[0.2em] uppercase text-cream/70">
                         {option.name}:{" "}
                         <span className="text-cream font-medium">
-                          {selectedOptions[option.name]}
+                          {option.name.toLowerCase() === "size"
+                            ? normalizeSizeLabel(selectedOptions[option.name])
+                            : selectedOptions[option.name]}
                         </span>
                       </label>
                       {option.name.toLowerCase() === "size" && (
@@ -344,13 +373,20 @@ export function ProductDetail({ product, completeTheLook, onCartAdd }: Props) {
                       )}
                     </div>
                     <div className="flex flex-wrap gap-2">
-                      {option.values.map((value) => {
+                      {(option.name.toLowerCase() === "size"
+                        ? sortSizeValues(option.values)
+                        : option.values
+                      ).map((value) => {
                         const isSelected =
                           selectedOptions[option.name] === value;
                         const isAvailable = isVariantAvailable(
                           option.name,
                           value
                         );
+                        const displayLabel =
+                          option.name.toLowerCase() === "size"
+                            ? normalizeSizeLabel(value)
+                            : value;
 
                         return (
                           <button
@@ -367,7 +403,7 @@ export function ProductDetail({ product, completeTheLook, onCartAdd }: Props) {
                                   : "border-cream/10 text-cream/25 cursor-not-allowed line-through"
                             }`}
                           >
-                            {value}
+                            {displayLabel}
                           </button>
                         );
                       })}

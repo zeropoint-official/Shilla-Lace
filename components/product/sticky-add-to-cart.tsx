@@ -54,8 +54,22 @@ export function StickyAddToCart({ product, selectedVariant, onCartAdd }: Props) 
     parseFloat(selectedVariant.compareAtPrice.amount) >
       parseFloat(selectedVariant.price.amount);
 
+  const SIZE_ABBREV: Record<string, string> = {
+    "x-small": "XS", "xsmall": "XS", "extra small": "XS", "xs": "XS",
+    "small": "S", "s": "S",
+    "medium": "M", "m": "M",
+    "large": "L", "l": "L",
+    "x-large": "XL", "xlarge": "XL", "extra large": "XL", "xl": "XL",
+    "xx-large": "XXL", "xxlarge": "XXL", "xxl": "XXL",
+    "2xl": "XXL", "2x": "XXL",
+  };
+
   const variantLabel = selectedVariant?.selectedOptions
-    .map((o) => o.value)
+    .map((o) =>
+      o.name.toLowerCase() === "size"
+        ? SIZE_ABBREV[o.value.toLowerCase().trim()] ?? o.value
+        : o.value
+    )
     .join(" / ");
 
   return (
