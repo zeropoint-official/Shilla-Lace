@@ -120,8 +120,24 @@ function reshapeCart(cart: ShopifyCart): Cart {
     };
   }
 
+  // Shopify returns checkout URLs with the custom domain (shillalace.com),
+  // but that domain now points to Vercel. Rewrite to the .myshopify.com domain
+  // so checkout still works.
+  const shopifyDomain = process.env.SHOPIFY_STORE_DOMAIN!;
+  let checkoutUrl = cart.checkoutUrl;
+  if (checkoutUrl && !checkoutUrl.includes(".myshopify.com")) {
+    try {
+      const url = new URL(checkoutUrl);
+      url.hostname = shopifyDomain;
+      checkoutUrl = url.toString();
+    } catch {
+      // keep original URL if parsing fails
+    }
+  }
+
   return {
     ...cart,
+    checkoutUrl,
     lines: removeEdgesAndNodes(cart.lines),
   };
 }
