@@ -6,7 +6,7 @@ export function OrganizationJsonLd() {
     "@type": "Organization",
     name: "Shilla Lace",
     url: baseUrl,
-    logo: `${baseUrl}/logo.png`,
+    logo: `${baseUrl}/logo.avif`,
     description:
       "Redefining intimacy with luxurious lingerie. Celebrating confidence and embracing individuality since 2021.",
     foundingDate: "2021",

@@ -25,12 +25,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!collection) return notFound();
 
+  const title = collection.seo?.title || collection.title;
+  const description =
+    collection.seo?.description ||
+    collection.description ||
+    `Shop ${collection.title} at Shilla Lace`;
+
   return {
-    title: collection.seo?.title || collection.title,
-    description:
-      collection.seo?.description ||
-      collection.description ||
-      `Shop ${collection.title} at Shilla Lace`,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      url: `/collections/${handle}`,
+      ...(collection.image && {
+        images: [
+          {
+            url: collection.image.url,
+            width: collection.image.width,
+            height: collection.image.height,
+            alt: collection.image.altText || collection.title,
+          },
+        ],
+      }),
+    },
   };
 }
 

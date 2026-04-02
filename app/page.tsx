@@ -10,6 +10,18 @@ import { BrandStory } from "@/components/home/brand-story";
 import { BrandEssence } from "@/components/home/brand-essence";
 import { NewsletterSection } from "@/components/home/newsletter-section";
 import { ProductGridSkeleton } from "@/components/ui/skeletons";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  description:
+    "Shop luxury lingerie, bodysuits, and intimate wear at Shilla Lace. Handcrafted designs celebrating confidence and individuality. Based in Cyprus, shipping worldwide.",
+  openGraph: {
+    title: "Shilla Lace | Luxurious Lingerie",
+    description:
+      "Shop luxury lingerie, bodysuits, and intimate wear. Handcrafted designs celebrating confidence and individuality.",
+    url: "/",
+  },
+};
 
 export const revalidate = 60;
 
