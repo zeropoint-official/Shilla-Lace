@@ -182,26 +182,19 @@ export function ProductDetail({ product, completeTheLook, onCartAdd }: Props) {
 
     setIsBuyingNow(true);
 
-    addCartItem({
-      id: "optimistic-buynow-" + Date.now(),
-      quantity: 1,
-      cost: { totalAmount: selectedVariant.price },
-      merchandise: {
-        id: selectedVariant.id,
-        title: selectedVariant.title,
-        selectedOptions: selectedVariant.selectedOptions,
-        product,
-      },
-    });
+    try {
+      const checkoutUrl = await addItemAndGetCheckoutUrl(selectedVariant.id);
 
-    const checkoutUrl = await addItemAndGetCheckoutUrl(selectedVariant.id);
-
-    if (checkoutUrl) {
-      window.location.href = checkoutUrl;
-    } else {
-      setIsBuyingNow(false);
-      onCartAdd?.();
+      if (checkoutUrl) {
+        window.location.href = checkoutUrl;
+        return;
+      }
+    } catch {
+      // fall through to cart
     }
+
+    setIsBuyingNow(false);
+    onCartAdd?.();
   }
 
   return (
