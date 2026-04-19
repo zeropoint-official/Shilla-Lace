@@ -5,7 +5,7 @@ const shopLinks = [
   { title: "Lingerie", href: "/collections/lingerie" },
   { title: "Bodysuits", href: "/collections/bodysuits" },
   { title: "Stockings", href: "/collections/cro-stockings" },
-  { title: "Best Sellers", href: "/collections/lingerie-new" },
+  { title: "Best Sellers", href: "/collections/best-sellers" },
   { title: "New Arrivals", href: "/collections/new-in" },
 ];
 

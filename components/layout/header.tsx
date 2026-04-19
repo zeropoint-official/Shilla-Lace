@@ -15,7 +15,7 @@ const navigation = [
   { title: "Lingerie",    href: "/collections/lingerie"     },
   { title: "Bodysuits",   href: "/collections/bodysuits"    },
   { title: "Stockings",   href: "/collections/cro-stockings"},
-  { title: "Bestsellers", href: "/collections/lingerie-new" },
+  { title: "Bestsellers", href: "/collections/best-sellers" },
   { title: "Shop All",    href: "/collections/shop-all"     },
 ];
 

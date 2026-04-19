@@ -28,7 +28,7 @@ export const revalidate = 60;
 async function BestsellersRow() {
   try {
     const products = await getCollectionProducts({
-      collection: "lingerie-new",
+      collection: "best-sellers",
       sortKey: "BEST_SELLING",
     });
     if (!products.length) return null;
@@ -37,7 +37,7 @@ async function BestsellersRow() {
         products={products.slice(0, 8)}
         title="Bestsellers"
         subtitle="Most Loved"
-        href="/collections/lingerie-new"
+        href="/collections/best-sellers"
       />
     );
   } catch {

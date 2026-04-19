@@ -44,7 +44,7 @@ export const getCollectionProductsQuery = /* GraphQL */ `
     $handle: String!
     $sortKey: ProductCollectionSortKeys
     $reverse: Boolean
-    $first: Int = 50
+    $first: Int = 250
   ) {
     collection(handle: $handle) {
       products(sortKey: $sortKey, reverse: $reverse, first: $first) {
